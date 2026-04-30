@@ -5,3 +5,4 @@ pyproject.toml
 abdullah.db
 __pycache__
 /backend/.env
+/backend/portfolio.db

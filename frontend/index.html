@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhammad Abdullah — Backend Developer</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="dot-grid"></div>
+  <div class="glow-orb"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">&lt;MA /&gt;</a>
+
+    <!-- Hamburger toggle -->
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Mobile overlay -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- Nav drawer -->
+    <div class="nav-drawer" id="navDrawer">
+      <ul class="nav-links">
+        <li><a href="index.html"    class="nav-link active">home</a></li>
+        <li><a href="about.html"    class="nav-link">about</a></li>
+        <li><a href="projects.html" class="nav-link">projects</a></li>
+        <li><a href="blog.html"     class="nav-link">blog</a></li>
+        <li><a href="contact.html"  class="nav-link">contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="assets/resume.pdf" target="_blank" class="btn btn-outline-teal">⬇ resume</a>
+        <a href="admin/login.html" class="btn btn-ghost">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          admin
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <main class="hero">
+    <span class="section-label">// hello, world</span>
+    <span class="hero-iam">i am</span>
+    <h1 class="hero-name">Muhammad Abdullah</h1>
+
+    <div class="hero-role">
+      <span class="role-arrow">›</span>
+      <span class="typing-text" id="typingText"></span>
+      <span class="cursor-blink"></span>
+    </div>
+
+    <p class="hero-bio">
+      Building scalable AI-powered backends with FastAPI &amp; Python.<br>
+      Currently crafting a <span class="text-highlight">Virtual Try-On System</span> as my Final Year Project.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="projects.html" class="btn btn-primary">view projects →</a>
+      <a href="contact.html"  class="btn btn-secondary">contact me</a>
+    </div>
+
+    <div class="hero-socials">
+      <a href="https://github.com/"    target="_blank" class="social-link">github</a>
+      <span class="social-divider">|</span>
+      <a href="https://linkedin.com/"  target="_blank" class="social-link">linkedin</a>
+      <span class="social-divider">|</span>
+      <a href="mailto:hi@muhammadabdullah.dev" class="social-link">email</a>
+    </div>
+  </main>
+
+  <!-- SCROLL INDICATOR -->
+  <div class="scroll-indicator">
+    <span class="scroll-label">scroll</span>
+    <div class="scroll-line"></div>
+    <div class="scroll-arrow"></div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

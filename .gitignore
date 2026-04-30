@@ -3,4 +3,5 @@ uv.lock
 pyproject.toml
 .python-version
 .venv
-
+abdullah.db
+__pycache__

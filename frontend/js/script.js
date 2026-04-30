@@ -115,16 +115,3 @@ document.addEventListener('DOMContentLoaded', () => {
     if (href === current) link.classList.add('active')
   })
 })
-
-
-/* ============================================================
-   SCROLL INDICATOR — hide after scrolling
-   ============================================================ */
-
-const scrollIndicator = document.querySelector('.scroll-indicator')
-
-if (scrollIndicator) {
-  window.addEventListener('scroll', () => {
-    scrollIndicator.classList.toggle('hidden', window.scrollY > 80)
-  }, { passive: true })
-}

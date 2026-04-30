@@ -7,9 +7,11 @@ from .database import Base
 
 
 class BaseModel(Base):
+    __abstract__ = True
+    
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True, autoincrement=True)
     
-class User(BaseModel):
+class Author(BaseModel):
     __tablename__ = "admin"
     
     email: Mapped[str] = mapped_column(String(130), nullable=False)

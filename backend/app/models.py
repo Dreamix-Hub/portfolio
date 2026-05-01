@@ -45,9 +45,10 @@ class Project(BaseModel):
     category_tag: Mapped[str] = mapped_column(Text)
     description: Mapped[str] = mapped_column(Text)
     techstack_tags: Mapped[str] = mapped_column(Text, nullable=False)
+    featured: Mapped[bool] = mapped_column(Boolean)
     live_link: Mapped[str] = mapped_column(Text)
     github_link: Mapped[str] = mapped_column(Text)
-    
+        
 class Blog(BaseModel):
     __tablename__ = "blogs"
     

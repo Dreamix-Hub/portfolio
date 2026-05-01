@@ -715,3 +715,152 @@ function initPostPage() {
 }
 
 document.addEventListener('DOMContentLoaded', initPostPage)
+
+/* ============================================================
+   CONTACT FORM — VALIDATION & SUBMIT
+   ============================================================ */
+
+const contactForm    = document.getElementById('contactForm')
+const contactSuccess = document.getElementById('contactSuccess')
+const contactReset   = document.getElementById('contactSuccessReset')
+
+/* ── Helpers ── */
+
+function getVal(id) {
+  const el = document.getElementById(id)
+  return el ? el.value.trim() : ''
+}
+
+function setError(fieldId, errorId, msg) {
+  const input = document.getElementById(fieldId)
+  const error = document.getElementById(errorId)
+  if (input) input.classList.toggle('error', !!msg)
+  if (error) error.textContent = msg || ''
+}
+
+function clearErrors() {
+  ;[
+    ['contactName',    'nameError'],
+    ['contactEmail',   'emailError'],
+    ['contactSubject', 'subjectError'],
+    ['contactMessage', 'messageError'],
+  ].forEach(([field, err]) => setError(field, err, ''))
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
+function validate() {
+  clearErrors()
+  let valid = true
+
+  if (!getVal('contactName')) {
+    setError('contactName', 'nameError', 'name is required')
+    valid = false
+  }
+
+  const email = getVal('contactEmail')
+  if (!email) {
+    setError('contactEmail', 'emailError', 'email is required')
+    valid = false
+  } else if (!isValidEmail(email)) {
+    setError('contactEmail', 'emailError', 'enter a valid email address')
+    valid = false
+  }
+
+  if (!getVal('contactSubject')) {
+    setError('contactSubject', 'subjectError', 'subject is required')
+    valid = false
+  }
+
+  if (!getVal('contactMessage')) {
+    setError('contactMessage', 'messageError', 'message is required')
+    valid = false
+  } else if (getVal('contactMessage').length < 10) {
+    setError('contactMessage', 'messageError', 'message is too short')
+    valid = false
+  }
+
+  return valid
+}
+
+/* ── Clear error on input ── */
+;['contactName', 'contactEmail', 'contactSubject', 'contactMessage'].forEach(id => {
+  const el = document.getElementById(id)
+  if (!el) return
+  el.addEventListener('input', () => {
+    el.classList.remove('error')
+    const errorMap = {
+      contactName:    'nameError',
+      contactEmail:   'emailError',
+      contactSubject: 'subjectError',
+      contactMessage: 'messageError',
+    }
+    const errEl = document.getElementById(errorMap[id])
+    if (errEl) errEl.textContent = ''
+  })
+})
+
+/* ── Submit ── */
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault()
+
+    if (!validate()) return
+
+    const submitBtn = document.getElementById('contactSubmit')
+    submitBtn.disabled = true
+    submitBtn.textContent = 'sending...'
+
+    const payload = {
+      name:    getVal('contactName'),
+      email:   getVal('contactEmail'),
+      subject: getVal('contactSubject'),
+      message: getVal('contactMessage'),
+    }
+
+    try {
+      /*
+       * BACKEND CONNECTION POINT
+       * When your FastAPI /api/contact endpoint is ready,
+       * uncomment the fetch below and remove the setTimeout mock.
+       *
+       * const res = await fetch('/api/contact', {
+       *   method:  'POST',
+       *   headers: { 'Content-Type': 'application/json' },
+       *   body:    JSON.stringify(payload),
+       * })
+       * if (!res.ok) throw new Error('server error')
+       */
+
+      // Mock success — remove this when backend is connected
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
+      // Show success state
+      contactForm.classList.add('hidden')
+      contactSuccess.classList.remove('hidden')
+
+    } catch (err) {
+      // Show a general error on the message field
+      setError('contactMessage', 'messageError', 'something went wrong. please try again.')
+      submitBtn.disabled = false
+      submitBtn.textContent = 'send message →'
+    }
+  })
+}
+
+/* ── Reset form ── */
+if (contactReset) {
+  contactReset.addEventListener('click', () => {
+    contactSuccess.classList.add('hidden')
+    contactForm.classList.remove('hidden')
+    contactForm.reset()
+    clearErrors()
+    const submitBtn = document.getElementById('contactSubmit')
+    if (submitBtn) {
+      submitBtn.disabled = false
+      submitBtn.textContent = 'send message →'
+    }
+  })
+}

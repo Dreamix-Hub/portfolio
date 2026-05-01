@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login — Muhammad Abdullah</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* ============================================================
+       ADMIN LOGIN — page-specific styles
+       ============================================================ */
+
+    .login-page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    /* ── Top logo link ── */
+    .login-logo {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: bold;
+      color: var(--accent);
+      letter-spacing: 3px;
+      margin-bottom: 40px;
+      transition: opacity 0.2s;
+    }
+
+    .login-logo:hover { opacity: 0.75; }
+
+    /* ── Card ── */
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      border: 1px solid var(--border-teal);
+      background: rgba(255, 255, 255, 0.02);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Teal top accent stripe */
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    /* Corner bracket decorators (top-right only for style) */
+    .login-card::after {
+      content: '';
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      width: 14px;
+      height: 14px;
+      border-bottom: 1px solid rgba(0, 229, 176, 0.3);
+      border-right:  1px solid rgba(0, 229, 176, 0.3);
+      pointer-events: none;
+    }
+
+    .login-card__inner {
+      padding: 36px 32px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ── Card header ── */
+    .login-header {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .login-header__label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      letter-spacing: 5px;
+      opacity: 0.85;
+    }
+
+    .login-header__title {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-heading);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .login-header__sub {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* ── Form ── */
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* ── Password toggle wrapper ── */
+    .input-password-wrap {
+      position: relative;
+    }
+
+    .input-password-wrap .form-input {
+      padding-right: 44px;
+    }
+
+    .password-toggle {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 4px;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-toggle:hover { color: var(--accent); }
+
+    /* ── Submit button ── */
+    .login-submit {
+      width: 100%;
+      justify-content: center;
+      margin-top: 4px;
+      font-size: 17px;
+      padding: 14px 28px;
+      transition: opacity 0.2s, background 0.2s;
+    }
+
+    .login-submit:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* ── Loading spinner inside button ── */
+    .btn-spinner {
+      display: none;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(7, 9, 15, 0.3);
+      border-top-color: var(--bg);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    .login-submit.loading .btn-spinner { display: block; }
+    .login-submit.loading .btn-label  { opacity: 0.75; }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── Error banner ── */
+    .login-error {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 16px;
+      border: 1px solid rgba(255, 80, 80, 0.3);
+      background: rgba(255, 80, 80, 0.05);
+      position: relative;
+    }
+
+    .login-error.hidden { display: none; }
+
+    .login-error::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: rgba(255, 80, 80, 0.5);
+    }
+
+    .login-error__icon {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      color: rgba(255, 80, 80, 0.8);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .login-error__msg {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: rgba(255, 80, 80, 0.75);
+      letter-spacing: 0.5px;
+      line-height: 1.6;
+    }
+
+    /* ── Card footer ── */
+    .login-card__footer {
+      border-top: 1px solid var(--border);
+      padding: 14px 32px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .login-footer__note {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-faint);
+      letter-spacing: 1px;
+    }
+
+    .login-footer__back {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+
+    .login-footer__back:hover { color: var(--accent); }
+
+    /* ── Bottom meta ── */
+    .login-meta {
+      margin-top: 28px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-faint);
+      letter-spacing: 1px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background decorators (same as all public pages) -->
+  <div class="dot-grid"></div>
+  <div class="glow-orb"></div>
+
+  <main class="login-page">
+
+    <!-- Logo — links back to portfolio home -->
+    <a href="../index.html" class="login-logo">&lt;MA /&gt;</a>
+
+    <!-- Login Card -->
+    <div class="login-card">
+
+      <div class="login-card__inner">
+
+        <!-- Card header -->
+        <div class="login-header">
+          <span class="login-header__label">// admin access</span>
+          <h1 class="login-header__title">sign in</h1>
+          <p class="login-header__sub">restricted area — authorised personnel only</p>
+        </div>
+
+        <!-- Error banner (hidden by default) -->
+        <div class="login-error hidden" id="loginError" role="alert" aria-live="polite">
+          <span class="login-error__icon">✕</span>
+          <span class="login-error__msg" id="loginErrorMsg">invalid credentials. please try again.</span>
+        </div>
+
+        <!-- Login form -->
+        <form class="login-form" id="loginForm" novalidate autocomplete="on">
+
+          <!-- Username -->
+          <div class="form-group">
+            <label class="form-label" for="adminUsername">username</label>
+            <input
+              class="form-input"
+              type="text"
+              id="adminUsername"
+              name="username"
+              placeholder="admin"
+              autocomplete="username"
+              spellcheck="false"
+              autocapitalize="off"
+            />
+            <span class="form-error" id="usernameError"></span>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label class="form-label" for="adminPassword">password</label>
+            <div class="input-password-wrap">
+              <input
+                class="form-input"
+                type="password"
+                id="adminPassword"
+                name="password"
+                placeholder="••••••••"
+                autocomplete="current-password"
+              />
+              <!-- Show / hide toggle -->
+              <button
+                type="button"
+                class="password-toggle"
+                id="passwordToggle"
+                aria-label="Toggle password visibility"
+              >
+                <!-- Eye icon (visible state) -->
+                <svg id="eyeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <!-- Eye-off icon (hidden state) -->
+                <svg id="eyeOffIcon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                     style="display:none;">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/>
+                  <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
+            <span class="form-error" id="passwordError"></span>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn btn-primary login-submit" id="loginSubmit">
+            <span class="btn-spinner"></span>
+            <span class="btn-label">sign in →</span>
+          </button>
+
+        </form>
+
+      </div><!-- /.login-card__inner -->
+
+      <!-- Card footer -->
+      <div class="login-card__footer">
+        <span class="login-footer__note">© 2025 Muhammad Abdullah</span>
+        <a href="../index.html" class="login-footer__back">← back to portfolio</a>
+      </div>
+
+    </div><!-- /.login-card -->
+
+    <p class="login-meta">admin panel v1.0 &nbsp;·&nbsp; built with FastAPI + Supabase</p>
+
+  </main>
+
+  <script>
+    /* ============================================================
+       LOGIN PAGE — client-side logic
+       ============================================================ */
+
+    const form          = document.getElementById('loginForm');
+    const usernameInput = document.getElementById('adminUsername');
+    const passwordInput = document.getElementById('adminPassword');
+    const usernameError = document.getElementById('usernameError');
+    const passwordError = document.getElementById('passwordError');
+    const loginError    = document.getElementById('loginError');
+    const loginErrorMsg = document.getElementById('loginErrorMsg');
+    const submitBtn     = document.getElementById('loginSubmit');
+    const toggleBtn     = document.getElementById('passwordToggle');
+    const eyeIcon       = document.getElementById('eyeIcon');
+    const eyeOffIcon    = document.getElementById('eyeOffIcon');
+
+    /* ── Password visibility toggle ── */
+    toggleBtn.addEventListener('click', () => {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+      eyeIcon.style.display    = isPassword ? 'none'  : 'block';
+      eyeOffIcon.style.display = isPassword ? 'block' : 'none';
+    });
+
+    /* ── Clear errors on input ── */
+    usernameInput.addEventListener('input', () => {
+      usernameInput.classList.remove('error');
+      usernameError.textContent = '';
+      hideLoginError();
+    });
+
+    passwordInput.addEventListener('input', () => {
+      passwordInput.classList.remove('error');
+      passwordError.textContent = '';
+      hideLoginError();
+    });
+
+    /* ── Form submission ── */
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validate()) return;
+
+      setLoading(true);
+      hideLoginError();
+
+      const payload = {
+        username: usernameInput.value.trim(),
+        password: passwordInput.value,
+      };
+
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          /* Store token (adjust key to match your backend) */
+          localStorage.setItem('admin_token', data.access_token ?? data.token ?? '');
+          /* Redirect to admin panel */
+          window.location.href = 'panel.html';
+        } else {
+          const data = await res.json().catch(() => ({}));
+          showLoginError(data.detail ?? 'invalid credentials. please try again.');
+        }
+      } catch (err) {
+        showLoginError('network error — could not reach server.');
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    /* ── Validation ── */
+    function validate() {
+      let valid = true;
+
+      if (!usernameInput.value.trim()) {
+        usernameInput.classList.add('error');
+        usernameError.textContent = 'username is required';
+        valid = false;
+      }
+
+      if (!passwordInput.value) {
+        passwordInput.classList.add('error');
+        passwordError.textContent = 'password is required';
+        valid = false;
+      }
+
+      return valid;
+    }
+
+    /* ── UI helpers ── */
+    function setLoading(state) {
+      submitBtn.disabled = state;
+      submitBtn.classList.toggle('loading', state);
+    }
+
+    function showLoginError(msg) {
+      loginErrorMsg.textContent = msg;
+      loginError.classList.remove('hidden');
+    }
+
+    function hideLoginError() {
+      loginError.classList.add('hidden');
+    }
+  </script>
+
+</body>
+</html>

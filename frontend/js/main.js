@@ -175,3 +175,55 @@ if (filterBtns.length) {
     })
   })
 }
+
+
+/* ============================================================
+   BLOG — TAG FILTER
+   ============================================================ */
+
+const blogFilterBtns = document.querySelectorAll('#blogFilterBar .filter-btn')
+const blogEmpty      = document.getElementById('blogEmpty')
+const blogCount      = document.getElementById('blogCount')
+
+if (blogFilterBtns.length) {
+
+  blogFilterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+
+      // Update active button
+      blogFilterBtns.forEach(b => b.classList.remove('active'))
+      btn.classList.add('active')
+
+      const filter = btn.dataset.filter
+
+      // Featured card
+      const featured = document.querySelector('.blog-card--featured')
+      if (featured) {
+        const featuredTags = featured.dataset.tags.split(' ')
+        featured.classList.toggle(
+          'hidden',
+          filter !== 'all' && !featuredTags.includes(filter)
+        )
+      }
+
+      // Regular cards
+      const cards = document.querySelectorAll('.blog-card--regular')
+      let visible = featured && !featured.classList.contains('hidden') ? 1 : 0
+
+      cards.forEach(card => {
+        const tags = card.dataset.tags.split(' ')
+        const show = filter === 'all' || tags.includes(filter)
+        card.classList.toggle('hidden', !show)
+        if (show) visible++
+      })
+
+      // Empty state
+      blogEmpty.classList.toggle('hidden', visible > 0)
+
+      // Update count
+      if (blogCount) {
+        blogCount.textContent = `${visible} post${visible !== 1 ? 's' : ''}`
+      }
+    })
+  })
+}

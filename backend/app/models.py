@@ -35,6 +35,7 @@ class Education(BaseModel):
     __tablename__ = "education"
     
     title: Mapped[str] = mapped_column(Text, nullable=False)
+    institute: Mapped[str] = mapped_column(Text, nullable=False)
     start_date: Mapped[str] = mapped_column(String(5))
     end_date: Mapped[str] = mapped_column(String(5), default="present")
 

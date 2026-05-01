@@ -19,7 +19,6 @@ class TechStackResponse(BaseModel):
     databases: str = Field(min_length=1, max_length=100)
     tools: str = Field(min_length=1, max_length=100)
     
-    
 class TechStackUpdate(BaseModel):
     languages: str | None = Field(default=None,min_length=1, max_length=100)
     framework: str | None = Field(default=None,min_length=1, max_length=100)
@@ -28,7 +27,14 @@ class TechStackUpdate(BaseModel):
     
 class EducationResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    title: str
-    institute: str
-    start_date: datetime
-    end_date: datetime
+    
+    title: str = Field(min_length=5, max_length=150)
+    institute: str = Field(min_length=5, max_length=200)
+    start_date: datetime = Field(min_length=5)
+    end_date: datetime = Field(min_length=5)
+
+class EducationUpdate(BaseModel):
+    title: str | None = Field(default=None ,min_length=5, max_length=200)
+    institute: str | None = Field(default=None ,min_length=5, max_length=200)
+    start_date: datetime | None = Field(default=None, min_length=5, max_length=200)
+    end_date: datetime | None = Field(default=None, min_length=5, max_length=200)

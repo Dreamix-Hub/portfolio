@@ -93,7 +93,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .nav-logo {
   font-family: var(--font-mono);
-  font-size: 20px;
+  font-size: 26px;
   font-weight: bold;
   color: var(--accent);
   letter-spacing: 3px;
@@ -185,7 +185,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .nav-link {
   font-family: var(--font-mono);
-  font-size: 16px;
+  font-size: 21px;
   color: var(--text-muted);
   letter-spacing: 1.5px;
   padding: 10px 12px;
@@ -247,7 +247,7 @@ button { background: none; border: none; cursor: pointer; }
   }
 
   .nav-link {
-    font-size: 15px;
+    font-size: 19px;
     padding: 0 0 2px 0;
     border-left: none;
     border-bottom: 1px solid transparent;
@@ -281,7 +281,7 @@ button { background: none; border: none; cursor: pointer; }
   align-items: center;
   gap: 6px;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 18px;
   letter-spacing: 1px;
   padding: 7px 18px;
   cursor: pointer;
@@ -292,7 +292,7 @@ button { background: none; border: none; cursor: pointer; }
 .btn-primary {
   background: var(--accent);
   color: var(--bg);
-  font-size: 15px;
+  font-size: 19px;
   font-weight: bold;
   padding: 13px 28px;
 }
@@ -303,7 +303,7 @@ button { background: none; border: none; cursor: pointer; }
   background: transparent;
   color: rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  font-size: 15px;
+  font-size: 19px;
   padding: 13px 28px;
 }
 
@@ -340,7 +340,7 @@ button { background: none; border: none; cursor: pointer; }
 .section-label {
   display: block;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 18px;
   color: var(--accent);
   letter-spacing: 5px;
   opacity: 0.85;
@@ -373,7 +373,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .section-title {
   font-family: var(--font-serif);
-  font-size: 35px;
+  font-size: 46px;
   font-weight: 700;
   color: var(--text-heading);
   letter-spacing: -1px;
@@ -381,7 +381,7 @@ button { background: none; border: none; cursor: pointer; }
 }
 
 @media (min-width: 1024px) {
-  .section-title { font-size: 45px; }
+  .section-title { font-size: 59px; }
 }
 
 /* ============================================================
@@ -412,14 +412,14 @@ button { background: none; border: none; cursor: pointer; }
 
 .footer-copy {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 17px;
   color: var(--text-faint);
   letter-spacing: 1px;
 }
 
 .footer-logo {
   font-family: var(--font-mono);
-  font-size: 15px;
+  font-size: 19px;
   color: rgba(0, 229, 176, 0.4);
   letter-spacing: 2px;
 }
@@ -452,7 +452,7 @@ button { background: none; border: none; cursor: pointer; }
 .hero-iam {
   display: block;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 18px;
   color: var(--text-muted);
   letter-spacing: 1px;
   margin-bottom: 8px;
@@ -460,7 +460,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .hero-name {
   font-family: var(--font-serif);
-  font-size: 45px;
+  font-size: 59px;
   font-weight: 700;
   color: var(--text-heading);
   line-height: 1.08;
@@ -469,11 +469,11 @@ button { background: none; border: none; cursor: pointer; }
 }
 
 @media (min-width: 480px) {
-  .hero-name { font-size: 60px; letter-spacing: -2px; }
+  .hero-name { font-size: 78px; letter-spacing: -2px; }
 }
 
 @media (min-width: 1024px) {
-  .hero-name { font-size: 78px; }
+  .hero-name { font-size: 102px; }
   .hero { padding: calc(var(--navbar-h) + 80px) 48px 80px; }
 }
 
@@ -490,25 +490,25 @@ button { background: none; border: none; cursor: pointer; }
 .role-arrow {
   color: rgba(255, 255, 255, 0.2);
   font-family: var(--font-mono);
-  font-size: 17px;
+  font-size: 22px;
   flex-shrink: 0;
 }
 
 .typing-text {
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 17px;
+  font-size: 22px;
   font-weight: 600;
   letter-spacing: 0.5px;
 }
 
 @media (min-width: 480px) {
-  .typing-text  { font-size: 20px; }
-  .role-arrow   { font-size: 20px; }
+  .typing-text  { font-size: 26px; }
+  .role-arrow   { font-size: 26px; }
 }
 
 @media (min-width: 1024px) {
-  .typing-text  { font-size: 21px; }
+  .typing-text  { font-size: 27px; }
 }
 
 .cursor-blink {
@@ -529,14 +529,14 @@ button { background: none; border: none; cursor: pointer; }
 .hero-bio {
   color: var(--text-body);
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: 21px;
   line-height: 1.85;
   max-width: 500px;
   margin: 0 auto 36px;
 }
 
 @media (min-width: 1024px) {
-  .hero-bio { font-size: 17px; margin-bottom: 44px; }
+  .hero-bio { font-size: 22px; margin-bottom: 44px; }
 }
 
 .hero-ctas {
@@ -571,7 +571,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .social-link {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 18px;
   color: var(--text-muted);
   letter-spacing: 1px;
   transition: color 0.2s;
@@ -582,7 +582,7 @@ button { background: none; border: none; cursor: pointer; }
 .social-divider {
   color: rgba(255, 255, 255, 0.1);
   margin: 0 12px;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 /* ============================================================
@@ -690,7 +690,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .stat-key {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-muted);
   letter-spacing: 1px;
   white-space: nowrap;
@@ -698,7 +698,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .stat-val {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: rgba(255, 255, 255, 0.6);
   text-align: right;
 }
@@ -714,13 +714,13 @@ button { background: none; border: none; cursor: pointer; }
 
 .about-para {
   color: var(--text-body);
-  font-size: 13px;
+  font-size: 17px;
   line-height: 1.85;
   font-family: var(--font-sans);
 }
 
 @media (min-width: 768px) {
-  .about-para { font-size: 14px; }
+  .about-para { font-size: 18px; }
 }
 
 .text-accent { color: var(--accent); }
@@ -737,7 +737,7 @@ button { background: none; border: none; cursor: pointer; }
 .tag {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-muted);
   border: 1px solid var(--border);
   padding: 5px 12px;
@@ -785,7 +785,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .stack-category {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-faint);
   letter-spacing: 2px;
   white-space: nowrap;
@@ -858,7 +858,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .timeline-date {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-muted);
   letter-spacing: 2px;
 }
@@ -868,19 +868,19 @@ button { background: none; border: none; cursor: pointer; }
 }
 
 .timeline-title {
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
   font-family: var(--font-sans);
 }
 
 @media (min-width: 768px) {
-  .timeline-title { font-size: 14px; }
+  .timeline-title { font-size: 18px; }
 }
 
 .timeline-sub {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-muted);
   letter-spacing: 0.5px;
 }
@@ -915,7 +915,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .projects-count {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-faint);
   letter-spacing: 1px;
   padding-bottom: 4px;
@@ -931,7 +931,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .filter-btn {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   letter-spacing: 1px;
   padding: 7px 16px;
   background: transparent;
@@ -1016,7 +1016,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .project-badge {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 16px;
   letter-spacing: 2px;
   padding: 3px 10px;
   text-transform: uppercase;
@@ -1042,29 +1042,29 @@ button { background: none; border: none; cursor: pointer; }
 }
 
 .project-card--featured .project-card__title {
-  font-size: 22px;
+  font-size: 29px;
   letter-spacing: -0.5px;
 }
 
 @media (min-width: 768px) {
-  .project-card--featured .project-card__title { font-size: 26px; }
+  .project-card--featured .project-card__title { font-size: 34px; }
 }
 
 .project-card--regular .project-card__title {
-  font-size: 16px;
+  font-size: 21px;
 }
 
 /* ── Description ── */
 .project-card__desc {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 16px;
   color: var(--text-body);
   line-height: 1.75;
 }
 
 @media (min-width: 768px) {
   .project-card--featured .project-card__desc {
-    font-size: 13px;
+    font-size: 17px;
     max-width: 620px;
   }
 }
@@ -1088,7 +1088,7 @@ button { background: none; border: none; cursor: pointer; }
 /* Small text links for regular cards */
 .project-link {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--accent);
   letter-spacing: 0.5px;
   transition: opacity 0.2s;
@@ -1132,7 +1132,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .projects-empty__msg {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 16px;
   color: var(--text-muted);
   letter-spacing: 1px;
 }
@@ -1152,7 +1152,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .blog-count {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-faint);
   letter-spacing: 1px;
   padding-bottom: 4px;
@@ -1223,36 +1223,36 @@ button { background: none; border: none; cursor: pointer; }
 }
 
 .blog-card--featured .blog-card__title {
-  font-size: 18px;
+  font-size: 24px;
 }
 
 @media (min-width: 600px) {
-  .blog-card--featured .blog-card__title { font-size: 20px; }
+  .blog-card--featured .blog-card__title { font-size: 26px; }
 }
 
 @media (min-width: 768px) {
-  .blog-card--featured .blog-card__title { font-size: 22px; }
+  .blog-card--featured .blog-card__title { font-size: 29px; }
 }
 
 .blog-card--regular .blog-card__title {
-  font-size: 14px;
+  font-size: 18px;
 }
 
 @media (min-width: 768px) {
-  .blog-card--regular .blog-card__title { font-size: 15px; }
+  .blog-card--regular .blog-card__title { font-size: 19px; }
 }
 
 /* ── Excerpt ── */
 .blog-card__excerpt {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 16px;
   color: var(--text-body);
   line-height: 1.75;
 }
 
 @media (min-width: 768px) {
   .blog-card--featured .blog-card__excerpt {
-    font-size: 13px;
+    font-size: 17px;
     max-width: 580px;
   }
 }
@@ -1268,7 +1268,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .blog-meta-item {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-faint);
   letter-spacing: 0.5px;
 }
@@ -1279,7 +1279,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .blog-meta-dot {
   color: var(--text-faint);
-  font-size: 10px;
+  font-size: 13px;
 }
 
 /* ── Card footer ── */
@@ -1298,14 +1298,14 @@ button { background: none; border: none; cursor: pointer; }
 
 .blog-author {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-faint);
   letter-spacing: 0.5px;
 }
 
 .blog-read-link {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--accent);
   letter-spacing: 1px;
   transition: opacity 0.2s;
@@ -1384,7 +1384,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .post-notfound__msg {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 16px;
   color: var(--text-muted);
   letter-spacing: 1px;
 }
@@ -1393,7 +1393,7 @@ button { background: none; border: none; cursor: pointer; }
 .post-back {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-muted);
   letter-spacing: 1px;
   margin-bottom: 32px;
@@ -1418,7 +1418,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .post-header__title {
   font-family: var(--font-serif);
-  font-size: 26px;
+  font-size: 34px;
   font-weight: 700;
   color: var(--text-heading);
   line-height: 1.25;
@@ -1426,11 +1426,11 @@ button { background: none; border: none; cursor: pointer; }
 }
 
 @media (min-width: 480px) {
-  .post-header__title { font-size: 32px; }
+  .post-header__title { font-size: 42px; }
 }
 
 @media (min-width: 768px) {
-  .post-header__title { font-size: 38px; letter-spacing: -1px; }
+  .post-header__title { font-size: 50px; letter-spacing: -1px; }
 }
 
 .post-header__meta {
@@ -1472,18 +1472,18 @@ button { background: none; border: none; cursor: pointer; }
   gap: 20px;
   color: var(--text-body);
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 18px;
   line-height: 1.9;
 }
 
 @media (min-width: 768px) {
-  .post-body { font-size: 15px; }
+  .post-body { font-size: 19px; }
 }
 
 /* Headings inside post */
 .post-body h2 {
   font-family: var(--font-serif);
-  font-size: 20px;
+  font-size: 26px;
   font-weight: 700;
   color: var(--text-heading);
   letter-spacing: -0.3px;
@@ -1491,12 +1491,12 @@ button { background: none; border: none; cursor: pointer; }
 }
 
 @media (min-width: 768px) {
-  .post-body h2 { font-size: 24px; }
+  .post-body h2 { font-size: 31px; }
 }
 
 .post-body h3 {
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--text-heading);
   margin-top: 8px;
@@ -1510,7 +1510,7 @@ button { background: none; border: none; cursor: pointer; }
 /* Inline code */
 .post-body code {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 16px;
   background: rgba(0, 229, 176, 0.07);
   color: var(--accent);
   padding: 2px 7px;
@@ -1525,7 +1525,7 @@ button { background: none; border: none; cursor: pointer; }
   padding: 18px 20px;
   overflow-x: auto;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 16px;
   line-height: 1.7;
   color: rgba(255, 255, 255, 0.6);
 }
@@ -1570,7 +1570,7 @@ button { background: none; border: none; cursor: pointer; }
 .post-body ol li::marker {
   color: var(--accent);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 16px;
 }
 
 /* Links inside post */
@@ -1624,14 +1624,14 @@ button { background: none; border: none; cursor: pointer; }
 
 .post-footer__label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-faint);
   letter-spacing: 2px;
 }
 
 .post-footer__name {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 16px;
   color: rgba(255, 255, 255, 0.55);
   letter-spacing: 1px;
 }
@@ -1643,7 +1643,7 @@ button { background: none; border: none; cursor: pointer; }
 /* ── Intro ── */
 .contact-intro {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 17px;
   color: var(--text-muted);
   line-height: 1.75;
   max-width: 520px;
@@ -1651,7 +1651,7 @@ button { background: none; border: none; cursor: pointer; }
 }
 
 @media (min-width: 768px) {
-  .contact-intro { font-size: 14px; }
+  .contact-intro { font-size: 18px; }
 }
 
 /* ── Two-column layout ── */
@@ -1708,7 +1708,7 @@ button { background: none; border: none; cursor: pointer; }
 /* Label */
 .form-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-muted);
   letter-spacing: 2px;
 }
@@ -1719,7 +1719,7 @@ button { background: none; border: none; cursor: pointer; }
   border: 1px solid var(--border);
   color: var(--text-heading);
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 17px;
   padding: 11px 14px;
   outline: none;
   transition: border-color 0.2s, background 0.2s;
@@ -1757,7 +1757,7 @@ button { background: none; border: none; cursor: pointer; }
 /* Inline error message */
 .form-error {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: rgba(255, 80, 80, 0.75);
   letter-spacing: 0.5px;
   min-height: 14px;
@@ -1782,7 +1782,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .form-required-note {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-faint);
   letter-spacing: 1px;
 }
@@ -1828,7 +1828,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .contact-success__icon {
   font-family: var(--font-mono);
-  font-size: 20px;
+  font-size: 26px;
   color: var(--accent);
   width: 36px;
   height: 36px;
@@ -1840,14 +1840,14 @@ button { background: none; border: none; cursor: pointer; }
 
 .contact-success__title {
   font-family: var(--font-serif);
-  font-size: 20px;
+  font-size: 26px;
   font-weight: 700;
   color: var(--text-heading);
 }
 
 .contact-success__msg {
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 17px;
   color: var(--text-body);
   line-height: 1.7;
 }
@@ -1880,7 +1880,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .contact-panel__label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-faint);
   letter-spacing: 2px;
 }
@@ -1894,14 +1894,14 @@ button { background: none; border: none; cursor: pointer; }
 
 .contact-detail__key {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 12px;
   color: var(--text-muted);
   letter-spacing: 2px;
 }
 
 .contact-detail__val {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   color: rgba(255, 255, 255, 0.55);
   letter-spacing: 0.5px;
   word-break: break-all;
@@ -1932,14 +1932,14 @@ button { background: none; border: none; cursor: pointer; }
 
 .contact-social-name {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-body);
   letter-spacing: 1px;
 }
 
 .contact-social-arrow {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 14px;
   color: rgba(0, 229, 176, 0.6);
 }
 
@@ -1966,14 +1966,14 @@ button { background: none; border: none; cursor: pointer; }
 
 .availability-label {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--accent);
   letter-spacing: 1px;
 }
 
 .contact-availability__desc {
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 16px;
   color: var(--text-muted);
   line-height: 1.65;
 }
@@ -1996,7 +1996,7 @@ button { background: none; border: none; cursor: pointer; }
 
 .contact-response__sub {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 13px;
   color: var(--text-muted);
   letter-spacing: 1px;
 }

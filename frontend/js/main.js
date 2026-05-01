@@ -116,3 +116,62 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 })
 
+/* ============================================================
+   PROJECTS — FILTER
+   ============================================================ */
+
+const filterBtns    = document.querySelectorAll('.filter-btn')
+const projectsGrid  = document.getElementById('projectsGrid')
+const projectsEmpty = document.getElementById('projectsEmpty')
+const projectsCount = document.getElementById('projectsCount')
+
+if (filterBtns.length) {
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+
+      // Update active button
+      filterBtns.forEach(b => b.classList.remove('active'))
+      btn.classList.add('active')
+
+      const filter = btn.dataset.filter
+
+      // Featured card
+      const featured = document.querySelector('.project-card--featured')
+      if (featured) {
+        const featuredTags = featured.dataset.tags.split(' ')
+        if (filter === 'all' || featuredTags.includes(filter)) {
+          featured.classList.remove('hidden')
+        } else {
+          featured.classList.add('hidden')
+        }
+      }
+
+      // Regular cards
+      const cards = document.querySelectorAll('.project-card--regular')
+      let visibleCount = featured && !featured.classList.contains('hidden') ? 1 : 0
+
+      cards.forEach(card => {
+        const tags = card.dataset.tags.split(' ')
+        if (filter === 'all' || tags.includes(filter)) {
+          card.classList.remove('hidden')
+          visibleCount++
+        } else {
+          card.classList.add('hidden')
+        }
+      })
+
+      // Show / hide empty state
+      if (visibleCount === 0) {
+        projectsEmpty.classList.remove('hidden')
+      } else {
+        projectsEmpty.classList.add('hidden')
+      }
+
+      // Update count
+      if (projectsCount) {
+        projectsCount.textContent = `${visibleCount} project${visibleCount !== 1 ? 's' : ''}`
+      }
+    })
+  })
+}

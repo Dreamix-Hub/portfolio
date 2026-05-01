@@ -900,3 +900,239 @@ button { background: none; border: none; cursor: pointer; }
     justify-content: flex-start;
   }
 }
+
+/* ============================================================
+   PROJECTS PAGE
+   ============================================================ */
+
+/* ── Header row ── */
+.projects-header-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.projects-count {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  letter-spacing: 1px;
+  padding-bottom: 4px;
+}
+
+/* ── Filter bar ── */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 36px;
+}
+
+.filter-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding: 7px 16px;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.filter-btn:hover {
+  color: var(--accent);
+  border-color: var(--border-teal);
+}
+
+.filter-btn.active {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  font-weight: bold;
+}
+
+/* ── Projects list wrapper ── */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Base card ── */
+.project-card {
+  position: relative;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.project-card:hover {
+  border-color: rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.project-card.hidden {
+  display: none;
+}
+
+.project-card__inner {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+@media (min-width: 768px) {
+  .project-card__inner { padding: 28px 32px; }
+}
+
+/* ── Featured card ── */
+.project-card--featured {
+  border-color: rgba(0, 229, 176, 0.22);
+  background: rgba(0, 229, 176, 0.03);
+}
+
+.project-card--featured:hover {
+  border-color: rgba(0, 229, 176, 0.38);
+  background: rgba(0, 229, 176, 0.05);
+}
+
+/* Top teal stripe — the highlight that replaces demo preview */
+.project-card__top-stripe {
+  height: 2px;
+  background: var(--accent);
+  width: 100%;
+}
+
+/* ── Badges ── */
+.project-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.project-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  padding: 3px 10px;
+  text-transform: uppercase;
+}
+
+.project-badge--featured {
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: bold;
+}
+
+.project-badge--tag {
+  border: 1px solid var(--border-teal);
+  color: var(--accent);
+}
+
+/* ── Title ── */
+.project-card__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--text-heading);
+  line-height: 1.2;
+}
+
+.project-card--featured .project-card__title {
+  font-size: 22px;
+  letter-spacing: -0.5px;
+}
+
+@media (min-width: 768px) {
+  .project-card--featured .project-card__title { font-size: 26px; }
+}
+
+.project-card--regular .project-card__title {
+  font-size: 16px;
+}
+
+/* ── Description ── */
+.project-card__desc {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-body);
+  line-height: 1.75;
+}
+
+@media (min-width: 768px) {
+  .project-card--featured .project-card__desc {
+    font-size: 13px;
+    max-width: 620px;
+  }
+}
+
+/* ── Stack tags ── */
+.project-card__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ── Actions ── */
+.project-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+/* Small text links for regular cards */
+.project-link {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  transition: opacity 0.2s;
+}
+
+.project-link:hover { opacity: 0.7; }
+
+.project-link--muted {
+  color: var(--text-muted);
+}
+
+.project-link--muted:hover {
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+}
+
+/* ── Regular projects grid ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 600px) {
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .projects-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── Empty state ── */
+.projects-empty {
+  padding: 48px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.projects-empty.hidden { display: none; }
+
+.projects-empty__msg {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}

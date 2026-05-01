@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Muhammad Abdullah</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="dot-grid"></div>
+  <div class="glow-orb"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-logo">&lt;MA /&gt;</a>
+
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <div class="nav-drawer" id="navDrawer">
+      <ul class="nav-links">
+        <li><a href="index.html"    class="nav-link">home</a></li>
+        <li><a href="about.html"    class="nav-link">about</a></li>
+        <li><a href="projects.html" class="nav-link active">projects</a></li>
+        <li><a href="blog.html"     class="nav-link">blog</a></li>
+        <li><a href="contact.html"  class="nav-link">contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="assets/resume.pdf" target="_blank" class="btn btn-outline-teal">⬇ resume</a>
+        <a href="admin/login.html" class="btn btn-ghost">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          admin
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PROJECTS PAGE -->
+  <main class="page">
+
+    <!-- Header -->
+    <div class="section-header">
+      <span class="section-label">// my work</span>
+      <div class="projects-header-row">
+        <h1 class="section-title">projects</h1>
+        <span class="projects-count" id="projectsCount">4 projects</span>
+      </div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-filter="all">all</button>
+      <button class="filter-btn" data-filter="ai-ml">ai / ml</button>
+      <button class="filter-btn" data-filter="backend">backend</button>
+      <button class="filter-btn" data-filter="fullstack">fullstack</button>
+    </div>
+
+    <!-- Projects list -->
+    <div class="projects-list" id="projectsList">
+
+      <!-- Featured project -->
+      <div class="project-card project-card--featured" data-tags="ai-ml backend">
+        <div class="project-card__top-stripe"></div>
+        <div class="project-card__inner">
+          <div class="project-card__badges">
+            <span class="project-badge project-badge--featured">FEATURED</span>
+            <span class="project-badge project-badge--tag">AI / ML</span>
+            <span class="project-badge project-badge--tag">BACKEND</span>
+          </div>
+          <h2 class="project-card__title">Virtual Try-On System</h2>
+          <p class="project-card__desc">
+            An AI-powered e-commerce try-on system integrating IDM-VTON and SCHP
+            models into a scalable FastAPI backend. Users upload their photo and a
+            garment image to generate realistic try-on results in real time.
+          </p>
+          <div class="project-card__stack">
+            <span class="tag">FastAPI</span>
+            <span class="tag">IDM-VTON</span>
+            <span class="tag">SCHP</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Docker</span>
+            <span class="tag">Supabase</span>
+          </div>
+          <div class="project-card__actions">
+            <a href="#" class="btn btn-primary">view project →</a>
+            <a href="#" target="_blank" class="btn btn-secondary">github ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Regular projects grid -->
+      <div class="projects-grid" id="projectsGrid">
+
+        <div class="project-card project-card--regular" data-tags="backend">
+          <div class="project-card__inner">
+            <div class="project-card__badges">
+              <span class="project-badge project-badge--tag">BACKEND</span>
+            </div>
+            <h3 class="project-card__title">Auth API Service</h3>
+            <p class="project-card__desc">
+              JWT-based authentication system with role management, refresh tokens,
+              and OAuth2 flow built on FastAPI.
+            </p>
+            <div class="project-card__stack">
+              <span class="tag">FastAPI</span>
+              <span class="tag">JWT</span>
+              <span class="tag">SQLAlchemy</span>
+            </div>
+            <div class="project-card__actions">
+              <a href="#" class="project-link">view →</a>
+              <a href="#" target="_blank" class="project-link project-link--muted">github ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card project-card--regular" data-tags="fullstack">
+          <div class="project-card__inner">
+            <div class="project-card__badges">
+              <span class="project-badge project-badge--tag">FULLSTACK</span>
+            </div>
+            <h3 class="project-card__title">Dev Portfolio</h3>
+            <p class="project-card__desc">
+              This very website — a fullstack portfolio with a FastAPI backend,
+              Supabase database, and vanilla HTML/CSS/JS frontend.
+            </p>
+            <div class="project-card__stack">
+              <span class="tag">FastAPI</span>
+              <span class="tag">Supabase</span>
+              <span class="tag">JS</span>
+            </div>
+            <div class="project-card__actions">
+              <a href="#" class="project-link">view →</a>
+              <a href="#" target="_blank" class="project-link project-link--muted">github ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card project-card--regular" data-tags="ai-ml">
+          <div class="project-card__inner">
+            <div class="project-card__badges">
+              <span class="project-badge project-badge--tag">AI / ML</span>
+            </div>
+            <h3 class="project-card__title">Image Pipeline API</h3>
+            <p class="project-card__desc">
+              A modular image processing pipeline with background removal,
+              segmentation, and pose estimation endpoints.
+            </p>
+            <div class="project-card__stack">
+              <span class="tag">Python</span>
+              <span class="tag">PyTorch</span>
+              <span class="tag">SCHP</span>
+            </div>
+            <div class="project-card__actions">
+              <a href="#" class="project-link">view →</a>
+              <a href="#" target="_blank" class="project-link project-link--muted">github ↗</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.projects-grid -->
+
+    </div>
+    <!-- /.projects-list -->
+
+    <!-- Empty state (shown when filter returns nothing) -->
+    <div class="projects-empty hidden" id="projectsEmpty">
+      <span class="section-label">// no results</span>
+      <p class="projects-empty__msg">no projects found for this filter.</p>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span class="footer-copy">&copy; 2025 Muhammad Abdullah. built with FastAPI + Supabase.</span>
+    <span class="footer-logo">&lt;MA /&gt;</span>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

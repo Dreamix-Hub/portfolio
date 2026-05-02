@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-from sqlalchemy import Integer, Text, String, ForeignKey, Table, Column
+from sqlalchemy import Integer, Text, String, ForeignKey, Table, Column, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from typing import List
-from datetime import datetime
+from datetime import datetime, UTC
 
 from .database import Base
 
@@ -86,11 +86,11 @@ class Blog(Base):
     __tablename__ = "blogs"
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    title: Mapped[str] 
-    content: Mapped[str]
-    is_draft: Mapped[bool]
-    created_at: Mapped[datetime]
-    updated_at: Mapped[datetime]
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    content: Mapped[str] = mapped_column(Text, nullable=False)
+    is_draft: Mapped[bool] = mapped_column(default=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), onupdate=lambda: datetime.now(UTC))
     
     category_id: Mapped[int] = mapped_column(
         ForeignKey("blog_category.id"),

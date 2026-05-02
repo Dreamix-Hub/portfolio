@@ -7,6 +7,7 @@ class Admin(Base):
     __tablename__ = "admin"
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+
     username: Mapped[str] = mapped_column(String(150), unique=True, nullable=False)
     password_has: Mapped[str] = mapped_column(String(200), unique=True, nullable=False)
     
@@ -22,3 +23,7 @@ class About(Base):
     location: Mapped[str] = mapped_column(String(200), nullable=True)
     github_link: Mapped[str] = mapped_column(String(200))
     linkedin_link: Mapped[str] = mapped_column(String(200))
+
+    email: Mapped[str] = mapped_column(String(150), unique=True, nullable=False)
+    password_has: Mapped[str] = mapped_column(String(200), unique=True, nullable=False)
+    

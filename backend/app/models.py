@@ -99,3 +99,14 @@ class Blog(Base):
     )
     category: Mapped[BlogCategory] = relationship(back_populates="blogs") 
 
+class Education(Base):
+    __tablename__ = "education"
+    
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    institute: Mapped[str] = mapped_column(String(200), nullable=False)
+    start_date: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    end_date: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), default=None)
+    is_current: Mapped[bool] = mapped_column(default=False)
+    
+    

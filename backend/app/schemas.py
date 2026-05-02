@@ -1,6 +1,7 @@
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 from typing import Optional
+from datetime import datetime
 class AdminBase(BaseModel):
     username: str = Field(min_length=4)
 
@@ -20,12 +21,11 @@ class Token:
     access_token: str
     
 class ProjectCreate(BaseModel):
-
     title: str = Field(min_length=5)
     description: str = Field(min_length=10)
     live_link: Optional[str] = None
     github_link: Optional[str] = None
-    featured: Optional[bool] = Field(default=False)
+    featured: bool = Field(default=False)
     category_id: int 
     techstack_ids: list[int]
 
@@ -34,20 +34,23 @@ class ProjectUpdate(BaseModel):
     description: Optional[str] = None 
     live_link: Optional[str] = None
     github_link: Optional[str] = None
-    featured: Optional[bool] = Field(default=False)
+    featured: bool = Field(default=False)
     category_id: int 
     techstack_ids: Optional[list[int]] = None 
-    
-class ProjectCategorySchema(BaseModel):
+   
+class CategorySchema(BaseModel):
     id: int
-    category_name: str
-
+    category_name: str 
+class ProjectCategorySchema(CategorySchema):
+    pass
 class TechStackSchema(BaseModel):
     id: int
     name: str
     type: str
     
 class ProjectResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    
     id : int
     title: str
     description: str
@@ -56,3 +59,29 @@ class ProjectResponse(BaseModel):
     live_link: str
     github_link: str
     featured: bool
+
+class BlogCreate(BaseModel):
+    title: str = Field(min_length=5)
+    content: str = Field(min_length=10)
+    is_draft: bool = Field(default=False)
+    category_id: int 
+
+class BlogUpdate(BaseModel):
+    title: str | None = Field(default=None ,min_length=5)
+    content: str | None = Field(default=None, min_length=10)
+    is_draft: bool = Field(default=False)
+    category_id: int | None
+
+class BlogCategorySchema(CategorySchema):
+   pass
+class BlogResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    
+    id: int
+    title: str
+    content: str
+    category: BlogCategorySchema
+    is_draft: bool
+    created_at: datetime
+    updated_at: datetime
+    

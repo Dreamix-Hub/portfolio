@@ -80,7 +80,7 @@ class BlogCategory(Base):
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
-    blog: Mapped[List["Blog"]] = relationship(back_populates="blog_category")
+    blog: Mapped[List["Blog"]] = relationship(back_populates="blog_categories")
     
 class Blog(Base):
     __tablename__ = "blogs"
@@ -93,7 +93,7 @@ class Blog(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), onupdate=lambda: datetime.now(UTC))
     
     category_id: Mapped[int] = mapped_column(
-        ForeignKey("blog_category.id"),
+        ForeignKey("blog_categories.id"),
         nullable=False,
         index=True
     )

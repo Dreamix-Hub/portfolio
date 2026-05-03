@@ -54,6 +54,20 @@ async def get_qualifications(db: Annotated[AsyncSession, Depends(get_db)]):
     
     return qualifications
 
+@router.get("/{id}", response_model=EducationResponse)
+async def get_degree(id: int, db: Annotated[AsyncSession, Depends(get_db)]):
+    result = await db.execute(
+        select(models.Education).where(models.Education.id == id)
+    )
+    degree = result.scalars().first()
+     
+    if not degree:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="education not found"
+        )
+    return degree
+    
 @router.patch("/{id}",response_model=EducationResponse)
 async def update_qualification(id: int, education: EducationUpdate, db: Annotated[AsyncSession, Depends(get_db)]):
     result = await db.execute(

@@ -151,8 +151,8 @@ class AboutResponse(BaseModel):
     full_name: str 
     headline: str 
     description: str 
-    email: EmailStr | None = Field(default=None, alias="email_public")
-    profile_image: str | None = Field(default=None, alias="profile_image_link")
+    email_public: EmailStr | None = Field(default=None)
+    profile_image_link: str | None = Field(default=None)
     location: str | None = None
     github_link: str
     linkedin_link: str
@@ -161,8 +161,8 @@ class AboutUpdate(BaseModel):
     full_name: str | None = Field(default=None)
     headline: str | None = Field(default=None)
     description: str | None = Field(default=None)
-    email: EmailStr | None = Field(default=None, alias="email_public")
-    profile_image: str | None = Field(default=None, alias="profile_image_link")
+    email_public: EmailStr | None = Field(default=None)
+    profile_image_link: str | None = Field(default=None)
     location: str | None = Field(default=None) 
     github_link: str | None = Field(default=None)
     linkedin_link: str | None = Field(default=None)

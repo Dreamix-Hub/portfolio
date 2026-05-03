@@ -38,5 +38,18 @@ async def add_education(education: EducationCreate, db: Annotated[AsyncSession, 
     await db.commit()
     await db.refresh(new_education)
     return new_education
-        
+
+@router.get("", response_model=list[EducationResponse])
+async def get_qualifications(db: Annotated[AsyncSession, Depends(get_db)]):        
+    result = await db.execute(
+        select(models.Education)
+    )
+    qualifications = result.scalars().all()
     
+    if not qualifications:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="no qualifications exist"
+        )
+    
+    return qualifications

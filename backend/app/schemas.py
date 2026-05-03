@@ -125,3 +125,22 @@ class EducationUpdate(BaseModel):
     institute: str | None
     start_date: datetime | None
     end_date: datetime | None
+
+class ContactBase(BaseModel):
+    name: str
+    email: str
+    subject: str
+    message: str
+    
+class ContactCreate(ContactBase):
+    pass
+
+class ContactResponse(ContactBase):
+    model_config = ConfigDict(from_attributes=True)
+    
+    id: int
+    created_at: datetime
+    is_read: bool
+
+class ContactUpdate(BaseModel):
+    is_read: bool | None

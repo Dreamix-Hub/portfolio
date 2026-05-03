@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, HTTPException, Depends, status
-from sqlalchemy import select, func
+from sqlalchemy import select, func, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
@@ -16,7 +16,7 @@ from ..schemas import (
 router = APIRouter()
 
 @router.post("", response_model=EducationResponse, status_code=status.HTTP_201_CREATED)
-async def add_education(education: EducationCreate, db: Annotated[AsyncSession, Depends(get_db)]):
+async def add_qualification(education: EducationCreate, db: Annotated[AsyncSession, Depends(get_db)]):
     result = await db.execute(
         select(models.Education).where(func.lower(models.Education.title) == education.title.lower())
     )
@@ -42,7 +42,7 @@ async def add_education(education: EducationCreate, db: Annotated[AsyncSession, 
 @router.get("", response_model=list[EducationResponse])
 async def get_qualifications(db: Annotated[AsyncSession, Depends(get_db)]):        
     result = await db.execute(
-        select(models.Education)
+        select(models.Education).order_by(desc(models.Education.start_date))
     )
     qualifications = result.scalars().all()
     
@@ -53,3 +53,29 @@ async def get_qualifications(db: Annotated[AsyncSession, Depends(get_db)]):
         )
     
     return qualifications
+
+@router.patch("/{id}",response_model=EducationResponse)
+async def update_qualification(id: int, education: EducationUpdate, db: Annotated[AsyncSession, Depends(get_db)]):
+    result = await db.execute(
+        select(models.Education).where(models.Education.id == id)
+    )
+    degree_exist = result.scalars().first()
+    
+    if not degree_exist:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="qualification not exist"
+        )
+        
+    update_education = education.model_dump(exclude_unset=True)
+    
+    for field_name, value in update_education.items():
+        if field_name in ["title", "institute", "start_date", "end_date"] and value:
+            value = value.lower() if isinstance(value, str) else value
+        
+        setattr(degree_exist, field_name, value)
+    
+    await db.commit()
+    await db.refresh(degree_exist)
+    
+    return degree_exist

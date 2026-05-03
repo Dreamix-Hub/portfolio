@@ -148,21 +148,21 @@ class ContactUpdate(BaseModel):
 class AboutResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     
-    full_name: str = Field(max_length=15)
-    headline: str = Field(min_length=20)
-    description: str = Field(min_length=30)
-    email: EmailStr = Field(min_length=10)
-    profile_image: str 
-    location: str 
+    full_name: str 
+    headline: str 
+    description: str 
+    email: EmailStr | None = Field(default=None, alias="email_public")
+    profile_image: str | None = Field(default=None, alias="profile_image_link")
+    location: str | None = None
     github_link: str
     linkedin_link: str
 
 class AboutUpdate(BaseModel):
-    full_name: str | None = Field(default=None, max_length=15)
-    headline: str | None = Field(default=None, min_length=20)
-    description: str | None = Field(default=None, min_length=30)
-    email: EmailStr | None = Field(default=None, min_length=10)
-    profile_image: str | None = Field(default=None)
+    full_name: str | None = Field(default=None)
+    headline: str | None = Field(default=None)
+    description: str | None = Field(default=None)
+    email: EmailStr | None = Field(default=None, alias="email_public")
+    profile_image: str | None = Field(default=None, alias="profile_image_link")
     location: str | None = Field(default=None) 
     github_link: str | None = Field(default=None)
     linkedin_link: str | None = Field(default=None)

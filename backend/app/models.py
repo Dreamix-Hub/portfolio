@@ -41,7 +41,7 @@ class ProjectCategory(Base):
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     category_name: Mapped[str] = mapped_column(String(150), nullable=False, unique=True)    
-    project: Mapped[List["Project"]] = relationship(back_populates="project_categories")  # <---- 1-to-M relationship with project
+    projects: Mapped[List["Project"]] = relationship(back_populates="category")  # <---- 1-to-M relationship with project
     
 class TechStack(Base):
     __tablename__ = "tech_stacks"
@@ -51,7 +51,7 @@ class TechStack(Base):
     type: Mapped[str] = mapped_column(String(50), nullable=False)
     projects: Mapped[List["Project"]] = relationship(
         secondary="project_techstack",
-        back_populates="tech_stacks"
+        back_populates="techstack"
     )
 class Project(Base):
     __tablename__ = "projects"
@@ -68,7 +68,7 @@ class Project(Base):
         nullable=False,
         index=True
     )
-    category: Mapped[ProjectCategory] = relationship(back_populates="projects") # <---- M-to-1 relationship with project_category
+    category: Mapped["ProjectCategory"] = relationship(back_populates="projects") # <---- M-to-1 relationship with project_category
     
     techstack: Mapped[List["TechStack"]] = relationship(
         secondary="project_techstack",
@@ -80,7 +80,7 @@ class BlogCategory(Base):
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
-    blog: Mapped[List["Blog"]] = relationship(back_populates="blog_categories")
+    blogs: Mapped[List["Blog"]] = relationship(back_populates="category")
     
 class Blog(Base):
     __tablename__ = "blogs"
@@ -97,7 +97,7 @@ class Blog(Base):
         nullable=False,
         index=True
     )
-    category: Mapped[BlogCategory] = relationship(back_populates="blogs") 
+    category: Mapped["BlogCategory"] = relationship(back_populates="blogs") 
 
 class Education(Base):
     __tablename__ = "education"

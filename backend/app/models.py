@@ -107,7 +107,6 @@ class Education(Base):
     institute: Mapped[str] = mapped_column(String(200), nullable=False)
     start_date: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     end_date: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), default=None)
-    is_current: Mapped[bool] = mapped_column(default=False)
     
 class Contact(Base):
     __tablename__ = "contact"

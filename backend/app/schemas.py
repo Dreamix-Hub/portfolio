@@ -2,6 +2,7 @@ from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 from typing import Optional
 from datetime import datetime
+
 class AdminBase(BaseModel):
     username: str = Field(min_length=4)
 
@@ -17,8 +18,8 @@ class AdminCreate(AdminLogin):
     pass
 
 class Token:
-    token_type: str
     access_token: str
+    token_type: str
     
 class ProjectCreate(BaseModel):
     title: str = Field(min_length=5)
@@ -37,13 +38,27 @@ class ProjectUpdate(BaseModel):
     featured: bool = Field(default=False)
     category_id: int 
     techstack_ids: Optional[list[int]] = None 
-   
-class CategorySchema(BaseModel):
+
+class ProjectCategoryCreate(BaseModel):
+    category_name: str 
+class ProjectCategoryUpdate(BaseModel):
+    category_name: str | None
+class ProjectCategoryResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     category_name: str 
-class ProjectCategorySchema(CategorySchema):
-    pass
-class TechStackSchema(BaseModel):
+    
+class TechStackCreate(BaseModel):
+    name: str
+    type: str
+class TechStackUpdate(BaseModel):
+    name: str | None
+    type: str | None
+
+class TechStackResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     name: str
     type: str
@@ -54,8 +69,8 @@ class ProjectResponse(BaseModel):
     id : int
     title: str
     description: str
-    category: ProjectCategorySchema
-    techstacks: list[TechStackSchema]
+    category: ProjectCategoryResponse
+    techstacks: list[TechStackResponse]
     live_link: str
     github_link: str
     featured: bool
@@ -72,16 +87,41 @@ class BlogUpdate(BaseModel):
     is_draft: bool = Field(default=False)
     category_id: int | None
 
-class BlogCategorySchema(CategorySchema):
-   pass
+class BlogCategoryCreate(BaseModel):
+    category_name: str
+class BlogCategoryUpdate(BaseModel):
+    category_name: str | None
+class BlogCategoryResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    category_name: str 
 class BlogResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     
     id: int
     title: str
     content: str
-    category: BlogCategorySchema
+    category: BlogCategoryResponse
     is_draft: bool
     created_at: datetime
     updated_at: datetime
     
+class EducationBase(BaseModel):
+    title: str
+    institute: str
+    start_date: datetime
+    end_date: datetime
+
+class EducationCreate(EducationBase):
+    pass
+
+class EducationResponse(EducationBase):
+    model_config = ConfigDict(from_attributes=True)
+    
+    id: int
+class EducationUpdate(BaseModel):
+    title: str | None
+    institute: str | None
+    start_date: datetime | None
+    end_date: datetime | None

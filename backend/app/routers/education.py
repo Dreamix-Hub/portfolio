@@ -93,3 +93,20 @@ async def update_qualification(id: int, education: EducationUpdate, db: Annotate
     await db.refresh(degree_exist)
     
     return degree_exist
+
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_degree(id: int, db: Annotated[AsyncSession, Depends(get_db)]):
+    result = await db.execute(
+        select(models.Education).where(models.Education.id == id)
+    )
+    degree_exist = result.scalars().first()
+    
+    if not degree_exist:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="degree not found"
+        )
+    
+    await db.delete(degree_exist)
+    await db.commit()
+    

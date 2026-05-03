@@ -111,7 +111,7 @@ class EducationBase(BaseModel):
     title: str
     institute: str
     start_date: datetime
-    end_date: datetime
+    end_date: datetime | None = None
 
 class EducationCreate(EducationBase):
     pass

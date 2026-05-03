@@ -9,7 +9,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from .database import Base, engine
 from . import models 
 from . import schemas
-from .routers import about
+from .routers import about, education
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
@@ -26,6 +26,7 @@ app = FastAPI(lifespan=lifespan)
 templates = Jinja2Templates(directory="../backend/app/templates")
 
 app.include_router(about.router, prefix="/api/about", tags=["About"])
+app.include_router(education.router, prefix="/api/education", tags=["Education"])
 
 # exception handlers
 @app.exception_handler(StarletteHTTPException)

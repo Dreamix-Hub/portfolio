@@ -42,7 +42,7 @@ class ProjectUpdate(BaseModel):
 class ProjectCategoryCreate(BaseModel):
     category_name: str 
 class ProjectCategoryUpdate(BaseModel):
-    category_name: str | None
+    category_name: str | None = Field(default=None)
 class ProjectCategoryResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -53,8 +53,8 @@ class TechStackCreate(BaseModel):
     name: str
     type: str
 class TechStackUpdate(BaseModel):
-    name: str | None
-    type: str | None
+    name: str | None = Field(default=None)
+    type: str | None = Field(default=None)
 
 class TechStackResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -85,12 +85,12 @@ class BlogUpdate(BaseModel):
     title: str | None = Field(default=None ,min_length=5)
     content: str | None = Field(default=None, min_length=10)
     is_draft: bool = Field(default=False)
-    category_id: int | None
+    category_id: int | None = Field(default=None)
 
 class BlogCategoryCreate(BaseModel):
     category_name: str
 class BlogCategoryUpdate(BaseModel):
-    category_name: str | None
+    category_name: str | None = Field(default=None)
 class BlogCategoryResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -121,14 +121,14 @@ class EducationResponse(EducationBase):
     
     id: int
 class EducationUpdate(BaseModel):
-    title: str | None
-    institute: str | None
-    start_date: datetime | None
-    end_date: datetime | None
+    title: str | None = Field(default=None)
+    institute: str | None = Field(default=None)
+    start_date: datetime | None = Field(default=None)
+    end_date: datetime | None = Field(default=None)
 
 class ContactBase(BaseModel):
     name: str
-    email: str
+    email: EmailStr
     subject: str
     message: str
     
@@ -143,4 +143,26 @@ class ContactResponse(ContactBase):
     is_read: bool
 
 class ContactUpdate(BaseModel):
-    is_read: bool | None
+    is_read: bool | None = Field(default=False)
+    
+class AboutResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    
+    full_name: str = Field(max_length=15)
+    headline: str = Field(min_length=20)
+    description: str = Field(min_length=30)
+    email: EmailStr = Field(min_length=10)
+    profile_image: str 
+    location: str 
+    github_link: str
+    linkedin_link: str
+
+class AboutUpdate(BaseModel):
+    full_name: str | None = Field(default=None, max_length=15)
+    headline: str | None = Field(default=None, min_length=20)
+    description: str | None = Field(default=None, min_length=30)
+    email: EmailStr | None = Field(default=None, min_length=10)
+    profile_image: str | None = Field(default=None)
+    location: str | None = Field(default=None) 
+    github_link: str | None = Field(default=None)
+    linkedin_link: str | None = Field(default=None)

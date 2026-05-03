@@ -28,6 +28,12 @@ async def add_qualification(education: EducationCreate, db: Annotated[AsyncSessi
             detail="education already exist with same title"
         )
     
+    if education.end_date is not None and education.start_date > education.end_date:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="end date should be greater than start date"
+        )
+    
     new_education = models.Education(
         title=education.title.lower(),
         institute=education.institute.lower(),
@@ -79,6 +85,12 @@ async def update_qualification(id: int, education: EducationUpdate, db: Annotate
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="qualification not exist"
+        )
+        
+    if education.end_date is not None and education.start_date > education.end_date:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="end date should be greater than start date"
         )
         
     update_education = education.model_dump(exclude_unset=True)

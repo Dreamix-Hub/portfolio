@@ -36,7 +36,7 @@ class ProjectUpdate(BaseModel):
     live_link: Optional[str] = None
     github_link: Optional[str] = None
     featured: bool = Field(default=False)
-    category_id: int 
+    category_id: Optional[int] = None
     techstack_ids: Optional[list[int]] = None 
 
 class ProjectCategoryCreate(BaseModel):

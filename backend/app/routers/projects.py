@@ -15,7 +15,7 @@ from ..schemas import (
 
 router = APIRouter()
 
-@router.post("", response_model=ProjectResponse)
+@router.post("", response_model=ProjectResponse, status_code=status.HTTP_201_CREATED)
 async def add_project(project_details: ProjectCreate, db: Annotated[AsyncSession, Depends(get_db)]):
     # check if category exist
     category_check = await db.execute(
@@ -107,12 +107,60 @@ async def get_projects(db: Annotated[AsyncSession, Depends(get_db)], category_id
             selectinload(models.Project.techstack)
         )
     )
-    project_exist = result.scalars().all()
+    all_projects = result.scalars().all()
+    
+    return all_projects
+
+@router.patch("/{id}", response_model=ProjectResponse)
+async def update_project(id: int, updated_data: ProjectUpdate, db: Annotated[AsyncSession, Depends(get_db)]):
+    result = await db.execute(
+        select(models.Project).where(models.Project.id == id).options(
+            selectinload(models.Project.category),
+            selectinload(models.Project.techstack)
+        )
+    )
+    project_exist = result.scalars().first()
     
     if not project_exist:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="no project exist in the projects table"
+            detail="project don't exist"
         )
     
-    return project_exist
+    details = updated_data.model_dump(exclude_unset=True)
+    
+    # handle techstack_ids separately since it's a many-to-many relationship
+    techstack_ids = details.pop("techstack_ids", None)
+    
+    for field_name, value in details.items():
+        if field_name in ["title", "description"] and value:
+            value = value.lower() if isinstance(value, str) else value
+        
+        setattr(project_exist, field_name, value)
+    
+    # update techstacks if provided
+    if techstack_ids is not None:
+        # clear existing techstacks
+        project_exist.techstack.clear()
+        # fetch and add new techstacks
+        techstacks = await db.execute(
+            select(models.TechStack).filter(models.TechStack.id.in_(techstack_ids))
+        )
+        for tech in techstacks.scalars().all():
+            project_exist.techstack.append(tech)
+        
+    await db.commit()
+    
+    # clear session cache entirely
+    db.expunge_all()
+    
+    # fetch fresh project with eagerly loaded relationships
+    result = await db.execute(
+        select(models.Project).where(models.Project.id == id).options(
+            selectinload(models.Project.category),
+            selectinload(models.Project.techstack)
+        )
+    )
+    updated_project = result.scalars().first()
+    return updated_project
+    

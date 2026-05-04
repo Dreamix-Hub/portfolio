@@ -28,7 +28,7 @@ class ProjectCreate(BaseModel):
     github_link: Optional[str] = None
     featured: bool = Field(default=False)
     category_id: int 
-    techstack_ids: list[int]
+    techstack_ids: list[int] = []
 
 class ProjectUpdate(BaseModel):
     title: Optional[str] = None 
@@ -70,7 +70,7 @@ class ProjectResponse(BaseModel):
     title: str
     description: str
     category: ProjectCategoryResponse
-    techstacks: list[TechStackResponse]
+    techstack: list[TechStackResponse]
     live_link: str
     github_link: str
     featured: bool

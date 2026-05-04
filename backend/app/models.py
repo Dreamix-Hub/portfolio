@@ -28,13 +28,6 @@ class About(Base):
     github_link: Mapped[str] = mapped_column(String(200))
     linkedin_link: Mapped[str] = mapped_column(String(200))
   
-# association table for using in Many-to-many relationship 
-project_techstack = Table(
-    "project_techstack", # <-- table name
-    Base.metadata,
-    Column("project_id", ForeignKey("projects.id"), primary_key=True),
-    Column("techstack_id", ForeignKey("tech_stacks.id"), primary_key=True)
-)
 
 class ProjectCategory(Base):
     __tablename__ = "project_categories"
@@ -43,6 +36,13 @@ class ProjectCategory(Base):
     category_name: Mapped[str] = mapped_column(String(150), nullable=False, unique=True)    
     projects: Mapped[List["Project"]] = relationship(back_populates="category")  # <---- 1-to-M relationship with project
     
+# association table for using in Many-to-many relationship 
+project_techstack = Table(
+    "project_techstack", # <-- table name
+    Base.metadata,
+    Column("project_id", ForeignKey("projects.id"), primary_key=True),
+    Column("techstack_id", ForeignKey("tech_stacks.id"), primary_key=True)
+)
 class TechStack(Base):
     __tablename__ = "tech_stacks"
     

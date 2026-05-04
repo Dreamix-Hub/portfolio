@@ -117,4 +117,4 @@ class Contact(Base):
     subject: Mapped[str] = mapped_column(String(400), nullable=False)
     message: Mapped[str] = mapped_column(Text, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
-    is_read: Mapped[bool] = mapped_column(default=False)
+    is_read: Mapped[bool | None] = mapped_column(default=False)

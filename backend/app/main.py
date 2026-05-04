@@ -7,7 +7,7 @@ from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from .database import Base, engine
-from .routers import about, contact, education
+from .routers import about, contact, education, projects
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
@@ -25,7 +25,8 @@ templates = Jinja2Templates(directory="../backend/app/templates")
 
 app.include_router(about.router, prefix="/api/about", tags=["About"])
 app.include_router(education.router, prefix="/api/education", tags=["Education"])
-app.include_router(contact.router, prefix="/api/contact", tags=["contact"])
+app.include_router(contact.router, prefix="/api/contact", tags=["Contact"])
+app.include_router(projects.router, prefix="/api/projects", tags=["Projects"])
 
 # exception handlers
 @app.exception_handler(StarletteHTTPException)

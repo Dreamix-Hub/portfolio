@@ -43,8 +43,31 @@ async def create_blog(blog_data: BlogCreate, db: Annotated[AsyncSession, Depends
     
     return new_blog
 
+# /api/blogs?category_id=1
 @router.get("", response_model=list[BlogResponse])
-async def get_blogs(db: Annotated[AsyncSession, Depends(get_db)]):
+async def get_blogs(db: Annotated[AsyncSession, Depends(get_db)], category_id: int | None = None):
+    
+    # if query parameter comes in
+    if category_id:
+        result = await db.execute(
+            select(models.BlogCategory).where(models.BlogCategory.id == category_id)
+        )
+        category_exist = result.scalars().first()
+        if not category_exist:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"no category exist with id {category_id}"
+            )
+        
+        blog = await db.execute(
+            select(models.Blog).where(models.Blog.category_id == category_id).options(
+                selectinload(models.Blog.category)
+            )
+        )
+        blog_exist = blog.scalars().all()
+        
+        return blog_exist
+    
     result = await db.execute(
         select(models.Blog).options(
             selectinload(models.Blog.category)

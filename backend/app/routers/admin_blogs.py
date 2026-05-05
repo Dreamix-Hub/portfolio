@@ -87,3 +87,20 @@ async def update_blog(id: int, blog_data: BlogUpdate, db: Annotated[AsyncSession
     await db.refresh(blog_exist, ["category"])
     return blog_exist
     
+@router.delete("/{id}")
+async def delete_blog(id: int, db: Annotated[AsyncSession, Depends(get_db)]):
+    result = await db.execute(
+        select(models.Blog).where(models.Blog.id == id).options(
+            selectinload(models.Blog.category)
+        )
+    )
+    blog_exist = result.scalars().first()
+    
+    if not blog_exist:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="no blog exist in db"
+        )
+    
+    await db.delete(blog_exist)
+    await db.commit()

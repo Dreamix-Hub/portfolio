@@ -80,7 +80,7 @@ class BlogCategory(Base):
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String(100), nullable=False, unique=True)
-    blogs: Mapped[List["Blog"]] = relationship(back_populates="category")
+    blogs: Mapped[List["Blog"]] = relationship(back_populates="category", cascade="all, delete-orphan")
     
 class Blog(Base):
     __tablename__ = "blogs"

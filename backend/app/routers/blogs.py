@@ -84,3 +84,19 @@ async def get_blogs(db: Annotated[AsyncSession, Depends(get_db)], category_id: i
     
     return blog_exist
 
+@router.get("/{id}", response_model=BlogResponse)
+async def get_single_blog(id: int, db: Annotated[AsyncSession, Depends(get_db)]):
+    result = await db.execute(
+        select(models.Blog).where(models.Blog.id == id).options(
+            selectinload(models.Blog.category)
+        )
+    )
+    blog_exist = result.scalars().first()
+    
+    if not blog_exist:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="blog not found in the db"
+        )
+    
+    return blog_exist

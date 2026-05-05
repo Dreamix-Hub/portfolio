@@ -7,7 +7,7 @@ from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from .database import Base, engine
-from .routers import about, contact, education, projects, blogs
+from .routers import about, contact, education, projects, blogs, admin_blogs
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
@@ -28,6 +28,7 @@ app.include_router(education.router, prefix="/api/education", tags=["Education"]
 app.include_router(contact.router, prefix="/api/contact", tags=["Contact"])
 app.include_router(projects.router, prefix="/api/projects", tags=["Projects"])
 app.include_router(blogs.router, prefix="/api/blogs", tags=["Blogs"])
+app.include_router(admin_blogs.router, prefix="/api/admin/blogs", tags=["Admin Blogs"])
 
 # exception handlers
 @app.exception_handler(StarletteHTTPException)

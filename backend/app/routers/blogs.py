@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, status, Depends, HTTPException
-from sqlalchemy import select
+from sqlalchemy import select, and_
 from sqlalchemy.orm import selectinload
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -60,7 +60,8 @@ async def get_blogs(db: Annotated[AsyncSession, Depends(get_db)], category_id: i
             )
         
         blog = await db.execute(
-            select(models.Blog).where(models.Blog.category_id == category_id).options(
+            select(models.Blog).where(
+                and_(models.Blog.category_id == category_id, models.Blog.is_draft == False)).options(
                 selectinload(models.Blog.category)
             )
         )
@@ -69,7 +70,7 @@ async def get_blogs(db: Annotated[AsyncSession, Depends(get_db)], category_id: i
         return blog_exist
     
     result = await db.execute(
-        select(models.Blog).options(
+        select(models.Blog).where(models.Blog.is_draft == False).options(
             selectinload(models.Blog.category)
         )
     )

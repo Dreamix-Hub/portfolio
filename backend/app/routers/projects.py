@@ -142,7 +142,7 @@ async def update_project(id: int, updated_data: ProjectUpdate, db: Annotated[Asy
     if techstack_ids is not None:
         # clear existing techstacks
         project_exist.techstack.clear()
-        # fetch and add new techstacks
+        # fetch objects and add new techstacks
         techstacks = await db.execute(
             select(models.TechStack).filter(models.TechStack.id.in_(techstack_ids))
         )
@@ -163,4 +163,26 @@ async def update_project(id: int, updated_data: ProjectUpdate, db: Annotated[Asy
     )
     updated_project = result.scalars().first()
     return updated_project
+    
+@router.delete("/{id}")
+async def delete_project(id: int, db: Annotated[AsyncSession, Depends(get_db)]):
+    result = await db.execute(
+        select(models.Project).where(models.Project.id == id).options(
+            selectinload(models.Project.category),
+            selectinload(models.Project.techstack)
+        )
+    )
+    project_exist = result.scalars().first()
+    
+    if not project_exist:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"no project exist with id {id}"
+        )
+    
+    # clear techstack relationships before deletion to avoid cascade issues
+    project_exist.techstack.clear()
+    
+    await db.delete(project_exist)
+    await db.commit()
     

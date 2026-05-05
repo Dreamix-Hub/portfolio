@@ -71,20 +71,20 @@ class ProjectResponse(BaseModel):
     description: str
     category: ProjectCategoryResponse
     techstack: list[TechStackResponse]
-    live_link: str
-    github_link: str
+    live_link: Optional[str] = None
+    github_link: Optional[str] = None
     featured: bool
 
 class BlogCreate(BaseModel):
     title: str = Field(min_length=5)
     content: str = Field(min_length=10)
-    is_draft: bool = Field(default=False)
+    is_draft: bool = Field(default=True)
     category_id: int 
 
 class BlogUpdate(BaseModel):
     title: str | None = Field(default=None ,min_length=5)
     content: str | None = Field(default=None, min_length=10)
-    is_draft: bool = Field(default=False)
+    is_draft: bool = Field(default=True)
     category_id: int | None = Field(default=None)
 
 class BlogCategoryCreate(BaseModel):

@@ -95,7 +95,7 @@ class BlogCategoryResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
-    category_name: str 
+    name: str 
 class BlogResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     

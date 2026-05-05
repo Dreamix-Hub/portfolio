@@ -90,7 +90,7 @@ class Blog(Base):
     content: Mapped[str] = mapped_column(Text, nullable=False)
     is_draft: Mapped[bool] = mapped_column(default=True) # <--- default to drafted, prevent accidental publish
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC))
-    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), onupdate=lambda: datetime.now(UTC))
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
     
     category_id: Mapped[int] = mapped_column(
         ForeignKey("blog_categories.id"),

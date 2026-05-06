@@ -17,7 +17,7 @@ class AdminResponse(AdminBase):
 class AdminCreate(AdminLogin):
     pass
 
-class Token:
+class Token(BaseModel):
     access_token: str
     token_type: str
     

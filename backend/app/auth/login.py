@@ -9,9 +9,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..database import get_db
 from .. import models
 from ..schemas import (
-    AdminCreate,
-    AdminLogin,
-    AdminResponse,
     Token
 )
 
@@ -20,30 +17,6 @@ from .jwt import create_access_token
 from ..config import settings
 
 router = APIRouter()
-
-# @router.post("", response_model=AdminResponse, status_code=status.HTTP_201_CREATED)
-# async def create_admin(admin_details: AdminCreate, db: Annotated[AsyncSession, Depends(get_db)]):
-#     result = await db.execute(
-#         select(models.Admin).where(models.Admin.username == admin_details.username)
-#     )
-#     admin_exist = result.scalars().first()
-
-#     if admin_exist:
-#         raise HTTPException(
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="Admin already exist"
-#         )
-    
-#     new_admin = models.Admin(
-#         username=admin_details.username,
-#         password_hash=hash_password(admin_details.password)
-#     )
-    
-#     db.add(new_admin)
-#     await db.commit()
-#     await db.refresh(new_admin)
-#     return new_admin
-
 
 @router.post("", response_model=Token)
 async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()], db: Annotated[AsyncSession, Depends(get_db)]):

@@ -9,6 +9,7 @@ from ..schemas import (
     AboutResponse,
     AboutUpdate
 )
+from ..auth.dependencies import CurrentUser
 
 router = APIRouter()
 
@@ -27,7 +28,20 @@ async def get_about(db: Annotated[AsyncSession, Depends(get_db)]):
     return about_exist
     
 @router.patch("", response_model=AboutResponse)
-async def update_about(about_update: AboutUpdate, db: Annotated[AsyncSession, Depends(get_db)]):
+async def update_about(about_update: AboutUpdate, current_user: CurrentUser, db: Annotated[AsyncSession, Depends(get_db)]):
+
+    result = await db.execute(
+        select(models.Admin).where(models.Admin.username == current_user.username)
+    )
+    admin = result.scalars().first()
+    
+    if not admin or admin.username != current_user.username:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="not authorized to update this about"
+        ) 
+
+
     about = await db.execute(
         select(models.About)
     )

@@ -1,18 +1,8 @@
-from .config import settings
-
 import jwt
-from pwdlib import PasswordHash
 
 from datetime import datetime, UTC, timedelta
-from .config import settings
+from ..config import settings
 
-password_hash = PasswordHash.recommended()
-
-def hash_password(plain_password: str) -> str:
-    return password_hash.hash(plain_password)
-
-def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return password_hash.verify(plain_password, hashed_password)
 
 def create_access_token(data: dict, expire_delta: timedelta | None = None) -> str:
     to_encode = data.copy()

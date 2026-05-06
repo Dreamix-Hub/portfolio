@@ -27,7 +27,7 @@ async def create_blog(blog_data: BlogCreate, current_user: CurrentUser ,db: Anno
     if not admin or admin.username != current_user.username:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="not authorized to update this user"
+            detail="not authorized to update this blog"
         ) 
 
     # check if category exist 
@@ -58,7 +58,20 @@ async def create_blog(blog_data: BlogCreate, current_user: CurrentUser ,db: Anno
 
 # this api route serve Admin return all the blogs drafted + published
 @router.get("", response_model=list[BlogResponse])
-async def get_all_blogs(db: Annotated[AsyncSession, Depends(get_db)]):
+async def get_all_blogs(current_user: CurrentUser,db: Annotated[AsyncSession, Depends(get_db)]):
+    
+    result = await db.execute(
+        select(models.Admin).where(models.Admin.username == current_user.username)
+    )
+    admin = result.scalars().first()
+    
+    if not admin or admin.username != current_user.username:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="not authorized to update this blog"
+        ) 
+
+
     result = await db.execute(
         select(models.Blog).options(
             selectinload(models.Blog.category)

@@ -12,7 +12,7 @@ from ..schemas import (
     AdminResponse
 )
 
-from utlis import hash_password
+from .utils import hash_password
 
 router = APIRouter()
 
@@ -22,8 +22,8 @@ async def create_admin(admin_details: AdminCreate, db: Annotated[AsyncSession, D
         select(models.Admin).where(models.Admin.username == admin_details.username)
     )
     admin_exist = result.scalars().first()
-    
-    if not admin_exist:
+
+    if admin_exist:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Admin already exist"

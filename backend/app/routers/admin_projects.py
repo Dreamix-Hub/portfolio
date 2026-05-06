@@ -12,11 +12,24 @@ from ..schemas import (
     ProjectResponse,
     ProjectUpdate
 )
+from ..auth.dependencies import CurrentUser
 
 router = APIRouter()
 
 @router.post("", response_model=ProjectResponse, status_code=status.HTTP_201_CREATED)
-async def add_project(project_details: ProjectCreate, db: Annotated[AsyncSession, Depends(get_db)]):
+async def add_project(project_details: ProjectCreate, current_user: CurrentUser, db: Annotated[AsyncSession, Depends(get_db)]):
+
+    result = await db.execute(
+        select(models.Admin).where(models.Admin.username == current_user.username)
+    )
+    admin = result.scalars().first()
+    
+    if not admin or admin.username != current_user.username:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="not authorized to update this project"
+        ) 
+
     # check if category exist
     category_check = await db.execute(
         select(models.ProjectCategory).where(models.ProjectCategory.id == project_details.category_id)
@@ -66,10 +79,20 @@ async def add_project(project_details: ProjectCreate, db: Annotated[AsyncSession
     await db.refresh(new_project, ["category", "techstack"])
     return new_project
 
-
-
 @router.patch("/{id}", response_model=ProjectResponse)
-async def update_project(id: int, updated_data: ProjectUpdate, db: Annotated[AsyncSession, Depends(get_db)]):
+async def update_project(id: int, updated_data: ProjectUpdate, current_user: CurrentUser, db: Annotated[AsyncSession, Depends(get_db)]):
+
+    result = await db.execute(
+        select(models.Admin).where(models.Admin.username == current_user.username)
+    )
+    admin = result.scalars().first()
+    
+    if not admin or admin.username != current_user.username:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="not authorized to update this project"
+        ) 
+        
     result = await db.execute(
         select(models.Project).where(models.Project.id == id).options(
             selectinload(models.Project.category),
@@ -121,9 +144,20 @@ async def update_project(id: int, updated_data: ProjectUpdate, db: Annotated[Asy
     updated_project = result.scalars().first()
     return updated_project
  
-  
 @router.delete("/{id}")
-async def delete_project(id: int, db: Annotated[AsyncSession, Depends(get_db)]):
+async def delete_project(id: int, current_user: CurrentUser, db: Annotated[AsyncSession, Depends(get_db)]):
+
+    result = await db.execute(
+        select(models.Admin).where(models.Admin.username == current_user.username)
+    )
+    admin = result.scalars().first()
+    
+    if not admin or admin.username != current_user.username:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="not authorized to update this project"
+        ) 
+
     result = await db.execute(
         select(models.Project).where(models.Project.id == id).options(
             selectinload(models.Project.category),

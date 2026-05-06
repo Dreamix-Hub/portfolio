@@ -11,12 +11,26 @@ from ..schemas import (
     EducationUpdate, 
     EducationResponse
 )
+from ..auth.dependencies import CurrentUser
 
 
 router = APIRouter()
 
 @router.post("", response_model=EducationResponse, status_code=status.HTTP_201_CREATED)
-async def add_qualification(education: EducationCreate, db: Annotated[AsyncSession, Depends(get_db)]):
+async def add_qualification(education: EducationCreate, current_user: CurrentUser, db: Annotated[AsyncSession, Depends(get_db)]):
+
+    result = await db.execute(
+        select(models.Admin).where(models.Admin.username == current_user.username)
+    )
+    admin = result.scalars().first()
+    
+    if not admin or admin.username != current_user.username:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="not authorized to update this education"
+        ) 
+
+
     result = await db.execute(
         select(models.Education).where(func.lower(models.Education.title) == education.title.lower())
     )
@@ -75,7 +89,20 @@ async def get_degree(id: int, db: Annotated[AsyncSession, Depends(get_db)]):
     return degree
     
 @router.patch("/{id}",response_model=EducationResponse)
-async def update_qualification(id: int, education: EducationUpdate, db: Annotated[AsyncSession, Depends(get_db)]):
+async def update_qualification(id: int, education: EducationUpdate, current_user: CurrentUser, db: Annotated[AsyncSession, Depends(get_db)]):
+
+    result = await db.execute(
+        select(models.Admin).where(models.Admin.username == current_user.username)
+    )
+    admin = result.scalars().first()
+    
+    if not admin or admin.username != current_user.username:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="not authorized to update this education"
+        ) 
+
+
     result = await db.execute(
         select(models.Education).where(models.Education.id == id)
     )
@@ -107,7 +134,18 @@ async def update_qualification(id: int, education: EducationUpdate, db: Annotate
     return degree_exist
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_degree(id: int, db: Annotated[AsyncSession, Depends(get_db)]):
+async def delete_degree(id: int, current_user: CurrentUser,db: Annotated[AsyncSession, Depends(get_db)]):
+    result = await db.execute(
+        select(models.Admin).where(models.Admin.username == current_user.username)
+    )
+    admin = result.scalars().first()
+    
+    if not admin or admin.username != current_user.username:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="not authorized to update this education"
+        ) 
+
     result = await db.execute(
         select(models.Education).where(models.Education.id == id)
     )

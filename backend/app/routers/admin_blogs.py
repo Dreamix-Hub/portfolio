@@ -125,7 +125,7 @@ async def update_blog(id: int, blog_data: BlogUpdate, current_user: CurrentUser,
     await db.refresh(blog_exist, ["category"])
     return blog_exist
     
-@router.delete("/{id}")
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_blog(id: int, current_user: CurrentUser, db: Annotated[AsyncSession, Depends(get_db)]):
     result = await db.execute(
         select(models.Admin).where(models.Admin.username == current_user.username)

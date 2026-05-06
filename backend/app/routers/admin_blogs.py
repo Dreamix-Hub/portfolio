@@ -88,7 +88,19 @@ async def get_all_blogs(current_user: CurrentUser,db: Annotated[AsyncSession, De
     return blog_exist
 
 @router.patch("/{id}", response_model=BlogResponse)
-async def update_blog(id: int, blog_data: BlogUpdate, db: Annotated[AsyncSession, Depends(get_db)]):
+async def update_blog(id: int, blog_data: BlogUpdate, current_user: CurrentUser, db: Annotated[AsyncSession, Depends(get_db)]):
+    
+    result = await db.execute(
+        select(models.Admin).where(models.Admin.username == current_user.username)
+    )
+    admin = result.scalars().first()
+    
+    if not admin or admin.username != current_user.username:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="not authorized to update this blog"
+        ) 
+
     result = await db.execute(
         select(models.Blog).where(models.Blog.id == id).options(
             selectinload(models.Blog.category)

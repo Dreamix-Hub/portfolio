@@ -25,15 +25,15 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: An
     result = await db.execute(
         select(Admin).where(Admin.username == username_exist)
     )
-    username = result.scalars().first()
+    admin = result.scalars().first()
     
-    if not username:
+    if not admin:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="invalid or expire token",
             headers={"WWW-Authenticate": "Bearer"}
         )
     
-    return username
+    return admin
 
 CurrentUser = Annotated[Admin, Depends(get_current_user)]  # type alias

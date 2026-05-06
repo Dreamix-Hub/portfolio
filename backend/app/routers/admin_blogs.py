@@ -12,11 +12,24 @@ from ..schemas import (
     BlogResponse, 
     BlogUpdate
 )
+from ..auth.dependencies import CurrentUser
 
 router = APIRouter()
 
 @router.post("", response_model=BlogResponse)
-async def create_blog(blog_data: BlogCreate, db: Annotated[AsyncSession, Depends(get_db)]):
+async def create_blog(blog_data: BlogCreate, current_user: CurrentUser ,db: Annotated[AsyncSession, Depends(get_db)]):
+
+    result = await db.execute(
+        select(models.Admin).where(models.Admin.username == current_user.username)
+    )
+    admin = result.scalars().first()
+    
+    if not admin or admin.username != current_user.username:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="not authorized to update this user"
+        ) 
+
     # check if category exist 
     result = await db.execute(
         select(models.BlogCategory).where(models.BlogCategory.id == blog_data.category_id)

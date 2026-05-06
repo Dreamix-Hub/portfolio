@@ -8,7 +8,7 @@ def create_access_token(data: dict, expire_delta: timedelta | None = None) -> st
     to_encode = data.copy()
     
     if expire_delta:
-        expire = datetime.now(UTC) + timedelta()
+        expire = datetime.now(UTC) + expire_delta
     else:
         expire = datetime.now(UTC) + timedelta(minutes=settings.access_token_expires_min)
         

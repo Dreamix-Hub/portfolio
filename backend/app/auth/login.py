@@ -16,25 +16,27 @@ from .utils import hash_password
 
 router = APIRouter()
 
-@router.post("", response_model=AdminResponse)
-async def create_admin(admin_details: AdminCreate, db: Annotated[AsyncSession, Depends(get_db)]):
-    result = await db.execute(
-        select(models.Admin).where(models.Admin.username == admin_details.username)
-    )
-    admin_exist = result.scalars().first()
+# @router.post("", response_model=AdminResponse, status_code=status.HTTP_201_CREATED)
+# async def create_admin(admin_details: AdminCreate, db: Annotated[AsyncSession, Depends(get_db)]):
+#     result = await db.execute(
+#         select(models.Admin).where(models.Admin.username == admin_details.username)
+#     )
+#     admin_exist = result.scalars().first()
 
-    if admin_exist:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Admin already exist"
-        )
+#     if admin_exist:
+#         raise HTTPException(
+#             status_code=status.HTTP_400_BAD_REQUEST,
+#             detail="Admin already exist"
+#         )
     
-    new_admin = models.Admin(
-        username=admin_details.username,
-        password_hash=hash_password(admin_details.password)
-    )
+#     new_admin = models.Admin(
+#         username=admin_details.username,
+#         password_hash=hash_password(admin_details.password)
+#     )
     
-    db.add(new_admin)
-    await db.commit()
-    await db.refresh(new_admin)
-    return new_admin
+#     db.add(new_admin)
+#     await db.commit()
+#     await db.refresh(new_admin)
+#     return new_admin
+
+

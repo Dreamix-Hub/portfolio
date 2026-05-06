@@ -31,3 +31,16 @@ def create_access_token(data: dict, expire_delta: timedelta | None = None) -> st
     )
     return encoded_jwt
 
+def verify_access_token(token: str) -> str | None:
+    
+    try:
+        payload = jwt.decode(
+            token,
+            settings.secret_key.get_secret_value(),
+            algorithms=[settings.algorithm],
+            options={"require": ["exp", "sub"]}
+        )
+    except jwt.InvalidTokenError:
+        return None
+    else:
+        return payload.get("sub")

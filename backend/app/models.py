@@ -7,6 +7,7 @@ from typing import List
 from datetime import datetime, UTC
 
 from .database import Base
+from .config import settings
 
 class Admin(Base):
     __tablename__ = "admin"
@@ -22,12 +23,18 @@ class About(Base):
     full_name: Mapped[str] = mapped_column(String(100), nullable=False)
     headline: Mapped[str] = mapped_column(Text, nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
-    profile_image_link: Mapped[str | None] = mapped_column(Text, nullable=True)
+    profile_image: Mapped[str | None] = mapped_column(Text, nullable=True)
     email_public:Mapped[str | None] = mapped_column(String(150), nullable=True)
     location: Mapped[str | None] = mapped_column(String(200), nullable=True)
     github_link: Mapped[str] = mapped_column(String(200))
     linkedin_link: Mapped[str] = mapped_column(String(200))
   
+    @property
+    def profile_image_path(self):
+        if self.profile_image:
+            return f"{settings.supabase_url}/storage/v1/object/public/{settings.bucket_name}/{self.profile_image}"
+        return f"{settings.supabase_url}/storage/v1/object/public/{settings.bucket_name}/{self.profile_image}"
+        
 
 class ProjectCategory(Base):
     __tablename__ = "project_categories"

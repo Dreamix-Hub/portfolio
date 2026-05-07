@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..database import get_db
 from ..schemas import ContactCreate, ContactUpdate, ContactResponse
 from .. import models
+from ..auth.dependencies import CurrentUser
 
 router = APIRouter()
 
@@ -27,7 +28,18 @@ async def send_message(form_data: ContactCreate, db: Annotated[AsyncSession, Dep
     return new_message
 
 @router.get("", response_model=list[ContactResponse])
-async def get_messages(db: Annotated[AsyncSession, Depends(get_db)]):
+async def get_messages(current_user: CurrentUser, db: Annotated[AsyncSession, Depends(get_db)]):
+    result = await db.execute(
+        select(models.Admin).where(models.Admin.username == current_user.username)
+    )
+    admin = result.scalars().first()
+    
+    if not admin or admin.username != current_user.username:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="not authorized to update this message"
+        ) 
+
     result = await db.execute(
         select(models.Contact).order_by(asc(models.Contact.is_read))
     )
@@ -43,7 +55,18 @@ async def get_messages(db: Annotated[AsyncSession, Depends(get_db)]):
     return messages
 
 @router.get("/{id}", response_model=list[ContactResponse])
-async def get_message(id: int, db: Annotated[AsyncSession, Depends(get_db)]):
+async def get_message(id: int, current_user: CurrentUser,db: Annotated[AsyncSession, Depends(get_db)]):
+    result = await db.execute(
+        select(models.Admin).where(models.Admin.username == current_user.username)
+    )
+    admin = result.scalars().first()
+    
+    if not admin or admin.username != current_user.username:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="not authorized to update this education"
+        ) 
+
     result = await db.execute(
         select(models.Contact).where(models.Contact.id == id)
     )
@@ -59,7 +82,18 @@ async def get_message(id: int, db: Annotated[AsyncSession, Depends(get_db)]):
     return messages
 
 @router.patch("/{id}", response_model=ContactResponse)
-async def mark_as_read(id: int, message: ContactUpdate, db: Annotated[AsyncSession, Depends(get_db)]):
+async def mark_as_read(id: int,current_user: CurrentUser, message: ContactUpdate, db: Annotated[AsyncSession, Depends(get_db)]):
+    result = await db.execute(
+        select(models.Admin).where(models.Admin.username == current_user.username)
+    )
+    admin = result.scalars().first()
+    
+    if not admin or admin.username != current_user.username:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="not authorized to update this education"
+        ) 
+
     result = await db.execute(
         select(models.Contact).where(models.Contact.id == id)
     )
@@ -79,7 +113,7 @@ async def mark_as_read(id: int, message: ContactUpdate, db: Annotated[AsyncSessi
     return msg
 
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_message(id: int, db: Annotated[AsyncSession, Depends(get_db)]):
+async def delete_message(id: int, current_user: CurrentUser, db: Annotated[AsyncSession, Depends(get_db)]):
     result = await db.execute(
         select(models.Contact).where(models.Contact.id == id)
     )

@@ -13,5 +13,7 @@ class Settings(BaseSettings):
     secret_key: SecretStr
     algorithm: str = "HS256"
     access_token_expires_min: int = 30
+    supabase_url: str
+    bucket_name: str
 
 settings = Settings() #type: ignore[call-arg]

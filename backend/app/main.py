@@ -55,6 +55,24 @@ app.include_router(blogs.router, prefix="/api/blogs", tags=["Blogs"])
 app.include_router(admin_blogs.router, prefix="/api/admin/blogs", tags=["Admin Blogs"])
 app.include_router(login.router, prefix="/api/auth/login", tags=["Login"])
 
+
+
+@app.get("/health", include_in_schema=False)
+async def health(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "health.html",
+        {
+            "status_code": status.HTTP_200_OK,
+            "title": "Health check",
+            "message": "Everything running good :)"
+        }
+    )
+
+
+
+
+
 # exception handlers
 @app.exception_handler(StarletteHTTPException)
 async def general_http_exception_handler(

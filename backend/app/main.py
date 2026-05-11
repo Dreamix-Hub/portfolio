@@ -4,9 +4,8 @@ from fastapi import FastAPI, Request, status
 from fastapi.templating import Jinja2Templates
 from fastapi.exception_handlers import http_exception_handler, request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.exceptions import HTTPException as StarletteHTTPException
-
-
 
 from .database import Base, engine
 from .routers import (
@@ -32,6 +31,18 @@ async def lifespan(_app: FastAPI):
     
     
 app = FastAPI(lifespan=lifespan)
+
+origins = [
+    "http://127.0.0.1:8000"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 templates = Jinja2Templates(directory="../backend/app/templates")
 

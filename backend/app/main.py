@@ -22,9 +22,10 @@ from .auth import login
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
+    # now alembic will handle schema creation and other changes in the columns, attributes and the constraints
     # startup
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    # async with engine.begin() as conn:
+    #     await conn.run_sync(Base.metadata.create_all)
     yield
     # shutdown
     await engine.dispose()

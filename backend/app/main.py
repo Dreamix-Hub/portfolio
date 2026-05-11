@@ -33,7 +33,7 @@ async def lifespan(_app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 origins = [
-    "http://127.0.0.1:8000"
+    "https://abdol.dev/"
 ]
 
 app.add_middleware(

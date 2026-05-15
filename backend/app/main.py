@@ -7,8 +7,8 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from .database import Base, engine
-from .routers import (
+from app.database import Base, engine
+from app.routers import (
     about,
     contact,
     education,
@@ -17,7 +17,7 @@ from .routers import (
     admin_blogs,
     admin_projects
 )
-from .auth import login
+from app.auth import login
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):

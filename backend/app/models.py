@@ -69,7 +69,6 @@ class Project(Base):
     live_link: Mapped[str | None] = mapped_column(Text, nullable=True)
     github_link: Mapped[str | None] = mapped_column(Text, nullable=True)
     featured: Mapped[bool | None] = mapped_column(default=False)
-    cover_image: Mapped[str] = mapped_column(nullable=True)
     
     category_id: Mapped[int] = mapped_column(
         ForeignKey("project_categories.id"),

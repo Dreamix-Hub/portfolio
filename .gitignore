@@ -5,3 +5,4 @@ pyproject.toml
 __pycache__
 /backend/.env
 /backend/portfolio.db
+api-routes.txt
